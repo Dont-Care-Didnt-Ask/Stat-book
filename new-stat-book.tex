@@ -1,0 +1,72 @@
+\input{config.tex}
+
+\begin{document}
+\renewcommand{\thepage}{\CoverName}
+\input{title.tex}
+\pagenumbering{Roman}
+Данное учебное пособие составлено на основе экзаменационных билетов 2020 года по курсу <<Теория вероятностей и математическая статистика>> факультета ВМК МГУ (первый поток) и \textit{не является} конспектом лекций, а также \textit{не проверялось} преподавателями курса. 
+При составлении преимущественно использовались материалы, указанные в разделе \textbf{Литература}.
+
+\vspace{5mm}
+
+Авторский коллектив:
+\begin{compactlist}
+    \item Селезнёв~М.В.~---~рецензент (издание 1-е), главред (издание 2-е)
+    \item Рыгин~А.С.~---~главный редактор, верстальщик (издание 1-е, мат. стат.)
+    \item Рожков~И.С.~---~главный редактор (издание 1-е, теория вероятностей)
+    \item Васильев~Р.Л.~---~иллюстратор графиков (издание 1-е)
+\end{compactlist}
+
+\vspace{5mm}
+
+%Последняя версия учебного пособия доступна по адресу: \\ \url{https://mandaloreultimate.github.io/stat-book/main.pdf}.
+
+%Вы можете внести исправления в репозитории проекта: \\ \url{https://github.com/MandaloreUltimate/stat-book}.
+
+\vspace{1cm}
+
+\textbf{Авторы \textit{запрещают} Российскому авторскому обществу и любым другим организациям производить любого рода лицензирование данного произведения и осуществлять в интересах авторов какую бы то ни было иную связанную с авторскими правами деятельность без их письменного разрешения.}
+
+\microtypesetup{protrusion=false} % disables protrusion locally in the document
+\tableofcontents % prints Table of Contents
+\microtypesetup{protrusion=true} % enables protrusion
+
+\chapter{Теория вероятностей}
+\pagenumbering{arabic}
+\input{ProbTh/Section1__ProbabilitySpace_Events_ProbabilityProperties.tex}
+\input{ProbTh/Section2__ConditionalProbability_Independence_TotalProbability_Bayes.tex}
+\input{ProbTh/Section3__RandomVariable_GeneratedAndInducedProbSpace_CumulativeDistributionFunction.tex}
+\input{ProbTh/Section4__DiscreteSingularAbsContiniousVariables_Density_LebesgueThm.tex}
+\input{ProbTh/Section5__Expectation_Variance_Moments.tex}
+\input{ProbTh/Section6__Quantiles_Median_InterquartileRange.tex}
+\input{ProbTh/Section7__BernoulliScheme_GeometricAndExponentialDistribution.tex}
+\input{ProbTh/Section8__deMoivreLaplaceThm_NormalDistribution.tex}
+\input{ProbTh/Section9__SetsOfRandomVariables_JointCDF_Independence_Covariance_Correlation.tex}
+\input{ProbTh/Section10__MarkovChebyshevGauss_Inequalities_ThreeSigmaRule_LawOfLargeNumbers.tex}
+\input{ProbTh/Section11__ConvergenceOfRandomVariables.tex}
+\input{ProbTh/Section12__CharacteristicFunctions.tex}
+\input{ProbTh/Section13__Khinchin_LawOfLargeNumbers.tex}
+\input{ProbTh/Section14__CentralLimitThm.tex}
+\input{ProbTh/Section15__ConditionalExpectation.tex}
+
+\chapter{Математическая статистика}
+\input{MatStat/Introduction.tex}
+\input{MatStat/Section1__StatisticalStructure_Sample_Estimator_OrderStatistics_VariationalSeries_EmpiricalCDF.tex}
+\input{MatStat/Section2__PointEstimate_Bias_Consistency_Optimality_UniquenessOfOptimalEstimator.tex}
+\input{MatStat/Section3__SampleMoments.tex}
+\input{MatStat/Section4__LikelyhoodFunction_Sufficiency_Completeness_FactorizationThm.tex}
+\input{MatStat/Section5__RaoCramerInequality_EfficientEstimators.tex}
+\input{MatStat/Section6__RaoBlackwellKolmogorovThm_FunctionOfSufficientCompleteEstimator.tex}
+\input{MatStat/Section7__MomentMethod.tex}
+\input{MatStat/Section8__MaximumLikelyhoodEstimation.tex}
+\input{MatStat/Section9__ConfidenceIntervals_(CentralStatistic_And_PointEstimators).tex}
+\input{MatStat/Section10__ConfidenceIntervals_(Inequalities_And_LimitThms).tex}
+\input{MatStat/Section11__HypothesisChecking_NewmannPearsonLemma.tex}
+\input{MatStat/Section12__ConsentCriterions.tex}
+\input{MatStat/Section13__Student_ChiSquared_FishersThm_ConclusionsAboutNormal.tex}
+
+\input{Appendix.tex}
+\input{Bibliography.tex}
+
+\printindex
+\end{document}

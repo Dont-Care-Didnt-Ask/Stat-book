@@ -1,0 +1,154 @@
+\section{Точечная оценка. Несмещённость, состоятельность, оптимальность. Теорема о единственности оптимальной оценки}
+\begin{defn}
+    \textit{Статистика} или \textit{оценка} $T(\mathbf{X})$~--- измеримая функция от выборки.
+\end{defn}
+
+\begin{defn}
+    \textit{Несмещённая оценка} параметра $\theta$~--- статистика $T(\mathbf{X})$, т.ч. $\Always\colon \MExp T(X) = \theta$.
+\end{defn}
+
+Обозначим $T_n(\mathbf{X}) = T(\mathbf{X})$, чтобы подчеркнуть зависимость от объёма выборки.
+\begin{defn}
+    \textit{Асимптотически несмещённая оценка} параметра $\theta$~--- статистика $T_n(\mathbf{X})$, т.ч. $\Always \colon \; \MExp T_n(\mathbf{X}) \xrightarrow[n \rightarrow \infty]{} \theta$.
+\end{defn}
+
+\begin{defn}
+    \textit{Состоятельная оценка} параметра $\theta$~--- статистика $T_n(\mathbf{X})$, т.ч. $\Always \colon \; T_n(\mathbf{X}) \xrightarrow[n \rightarrow \infty]{p} \theta$.
+\end{defn}
+
+Оценки также могут вводиться и для функций $\tau(\theta)$ параметра $\theta$, для них все вышеуказанные определения вводятся аналогично.
+
+Несмещённость означает отсутствие ошибки «в среднем», т. е. при систематическом использовании данной оценки. 
+Несмещённость является желательным, но не обязательным свойством оценок. 
+Достаточно, чтобы смещение оценки (разница между её средним значением и истинным параметром) уменьшалось с ростом объёма выборки. 
+Поэтому асимптотическая несмещённость является весьма желательным свойством оценок. 
+
+Свойство состоятельности означает, что последовательность оценок приближается к неизвестному параметру при увеличении количества наблюдений. 
+Вспомним определение сходимости по вероятности: ${\Probab \Bigl(\bigl| T_n(\mathbf{X}) - \theta \bigr| > \varepsilon \Bigr) \xrightarrow[n \to \infty]{} 0} \; \forall\,  \varepsilon > 0.$
+Мы можем зафиксировать некоторый $\varepsilon_0$~--- допустимую погрешность, и найти такое $n$, что указанная вероятность будет мала~--- например, $0.01$. 
+Тогда значение оценки $T_n(\mathbf{X})$ с вероятностью $0.99$ отклоняется от истинного значения не более чем на $\varepsilon_0$.\\
+В отсутствие этого свойства статистика совершенно «несостоятельна» как оценка.
+
+
+\begin{rmrk}
+    Отметим некоторые свойства несмещённых и состоятельных оценок.
+    \begin{enumerate}
+        \item Несмещённые оценки не единственны.
+        
+        К примеру, в качестве несмещённой оценки для математического ожидания $\MExp X$ могут выступать $\MExp X_{1}$ или $\MExp \frac{1}{n} \sum\limits_{i = 1}^{n} X_i$.
+        
+        \item Несмещённые оценки могут не существовать.
+        \begin{exmp}
+            Дано распределение $\mathbf{Pois}(\theta)$, над которым произведено одно наблюдение. Найти несмещённую оценку для функции $\tau(\theta) = \cfrac{1}{\theta}$.
+                \begin{gather*}
+                    \MExp T(\mathbf{X}) = \tau(\theta) \\
+                    \mathlarger{\sum}_{x = 0}^{\infty} T(x) \, e^{-\theta} \frac{\theta^x}{x!} = \frac{1}{\theta} \\
+                    \mathlarger{\sum}_{x = 0}^{\infty} T(x) \, \frac{\theta^{x + 1}}{x!} = e^{\theta}, \text{ но } e^{\theta} = \mathlarger{\sum_{k = 0}^{\infty} \frac{\theta^k}{k!}} \; \Rightarrow \\
+                    T(x) \equiv \frac{1}{\theta} \quad \forall \, x \in \{0, 1, 2, 3, \ldots\}
+                \end{gather*}
+            Мы получили, что функция $T(x)$ зависит от $\theta$, но тогда она не может быть статистикой~--- ведь статистика должна зависеть только от выборки.
+        \end{exmp}
+        
+    \item Несмещённые оценки могут существовать, но быть бессмысленными.
+    \begin{exmp}
+        %Дано отрицательное биноминальное распределение с вероятностью успеха $p = 1 - \theta \; {\mathbf{NB}(1, 1 - \theta) \equiv \mathbf{Geom}(1 - \theta)}$, над которым произведено одно наблюдение.
+        Дано геометрическое распределение $\mathbf{Geom}(1 - \theta)$ с вероятностью успеха $1 - \theta$, над которым произведено одно наблюдение.
+        Найти несмещённую оценку для параметра $\theta$.
+        %\begin{gather*}
+        %    \MExp T(\mathbf{X})
+        %    = \frac{\theta}{1 - \theta}
+        %    = \sum\limits_{x=0}^{\infty} T(x) (1 - \theta) \theta^x \\
+        %    \sum\limits_{x=0}^{\infty}T(x)\theta^{x} 
+        %    = \cfrac{\theta}{1-\theta} 
+        %    = \sum\limits_{r=1}^{\infty}\theta^{r} \\
+        %    T(x) = 
+        %    \left\{\begin{array}{ll}
+        %        0, & \text { если } x = 0 \\
+        %        1, & \text { если } x \geqslant 1
+        %    \end{array}\right.
+        %\end{gather*}
+        \begin{gather*}
+            \MExp T(\mathbf{X}) = \theta \\
+            \mathlarger{\sum}_{x = 0}^{\infty} T(x) (1 - \theta) \theta^x = \theta \\
+            \mathlarger{\sum}_{x = 0}^{\infty} T(x) \theta^x = \frac{\theta}{1 -\theta} = \mathlarger{\sum}_{k = 1}^{\infty} \theta^k \; \Rightarrow \\
+            T(x) = \begin{cases}
+                0, & \text { если } x = 0 \\
+                1, & \text { если } x \geqslant 1
+            \end{cases}
+        \end{gather*}
+    Значения этой статистики не принадлежат параметрическому множеству $\Theta = (0, 1)$, следовательно, эта оценка бессмысленна.
+    \end{exmp}
+    
+    \item Состоятельные оценки не единственны.
+    
+    Как будет показано в следующем параграфе, выборочная дисперсия $S^{2}$ и несмещённая выборочная дисперсия $S_0^{2}$ являются состоятельными оценками теоретической дисперсии.
+    
+    \item Состоятельные оценки могут быть смещёнными.
+    
+    Например, выборочная дисперсия является состоятельной, но смещённой оценкой теоретической дисперсии.
+    
+    \end{enumerate}
+\end{rmrk}
+
+Как мы увидели, несмещённые и состоятельные оценки не единственны.
+Возникает вопрос~--- как определить, какая из нескольких имеющихся оценок лучше?
+
+Рассмотрим несмещённые оценки $T(\mathbf{X})$ параметра $\theta$, для которых существует дисперсия: $\MExp \bigl(T(\mathbf{X})-\theta\bigr)^{2}=\Var T(\mathbf{X})$.
+Обозначим класс всех таких оценок $\mathcal{T}$.
+Тогда можно оценивать точность оценок дисперсией.
+Если $T, T^* \in \mathcal{T}$ и $\Var T^* \leqslant \Var T \quad \Always$, то по $T^*$ \textit{равномерно (по $\theta$) не хуже} $T$.
+
+Введём понятие оптимальной оценки.
+\begin{defn}
+    \textit{Оптимальная оценка} параметра $\theta$~--- статистика $T^*(\mathbf{X})$, т.ч.:
+    \begin{enumerate}
+        \item $T^* \in \mathcal{T}$, т.е. $T^*$~--- несмещённая.
+        \item $T^*$ имеет равномерно минимальную дисперсию, т.е. для любой другой \textbf{несмещённой} оценки~$T_{1} \in \mathcal{T}$ параметра~$\theta \colon$ ${\Var T^* \leqslant \Var T_{1}} \quad {\Always}$.
+    \end{enumerate}
+\end{defn}
+
+\vspace{5mm}
+\begin{thm*}
+    Если существует оптимальная оценка параметра $\theta$, то она единственна.
+\end{thm*}
+
+\begin{proof}
+    Предположим обратное: пусть существуют две оптимальные оценки $T_1(\mathbf{X})$ и $T_2(\mathbf{X})$ параметра $\theta$. 
+    Тогда в силу их несмещённости: $\MExp  T_{1}(\mathbf{X}) = \MExp T_{2}(\mathbf{X}) = T(\mathbf{X})$,
+    а в силу того, что они имеют равномерно минимальную дисперсию: $\Var  T_{1}(\mathbf{X})=\Var  T_{2}(\mathbf{X}) \quad \Always$.
+
+    Введём новую статистику: 
+    \begin{equation*}
+        T_{3}(\mathbf{X})=\cfrac{T_{1}(\mathbf{X})+T_{2}(\mathbf{X})}{2}
+    \end{equation*}
+
+    Так как $\MExp  T_{3}(\mathbf{X})=\cfrac{\MExp  T_{1}(\mathbf{X})+\MExp  T_{2}(\mathbf{X})}{2}=\theta$, то $T_{3}(\mathbf{X})$~--- несмещённая оценка параметра $\theta$.
+
+    Имеем также:
+    \begin{equation*}
+        \Var  T_{3}(\mathbf{X}) = 
+        \cfrac{\Var \bigl(T_{1}(\mathbf{X})+T_{2}(\mathbf{X})\bigr)}{2^2} =
+        \cfrac{\Var  T_{1}(\mathbf{X})+\Var  T_{2}(\mathbf{X})+2 \operatorname{cov}\bigl(T_{1}(\mathbf{X}) T_{2}(\mathbf{X})\bigr)}{4}
+    \end{equation*}
+
+    %В силу свойства
+    %\begin{equation*}
+    %    \MExp \xi^{2}<\infty, \MExp \eta^{2}<\infty \Rightarrow|\operatorname{cov}(\xi, \eta)| = | \MExp (\xi-\MExp  \xi)(\eta-\MExp  \eta)| \leqslant \sqrt{\Var  \xi} \sqrt{\Var  \eta},
+    %\end{equation*}
+    По свойствам ковариции $| \operatorname{cov}(\xi, \eta)| \leqslant \sqrt{\Var \!\xi \, \Var \!\eta}$, а значит
+    %где равенство достигается тогда и только тогда, когда $\xi=a \eta+b$, получаем:
+    \begin{equation*}
+        \Var  T_{3}(\mathbf{X}) \leqslant \cfrac{\Var  T_{1}(\mathbf{X})+\Var  T_{2}(\mathbf{X})+2 \sqrt{\Var  T_{1}(\mathbf{X})} \sqrt{\Var  T_{2}(\mathbf{X})}}{4} =\Var  T_{1}(\mathbf{X})
+    \end{equation*}
+
+    В силу того, что $T_1(\mathbf{X})$ и $T_2(\mathbf{X})$ — оптимальные, дисперсия $T_3(\mathbf{X})$ не может быть меньше дисперсии $T_1(\mathbf{X})$, 
+    следовательно, неравенство должно обратиться в равенство, но тогда
+    \begin{equation*}
+    \begin{aligned}
+        T_{1}(\mathbf{X})=a T_{2}(\mathbf{X})+b \Rightarrow \MExp  T_{1}(\mathbf{X})
+        = a \MExp  T_{2}(\mathbf{X})+b 
+        \Leftrightarrow \\
+        \Leftrightarrow \theta = a \theta + b~ \Always \Rightarrow a = 1, b = 0
+    \end{aligned}
+    \end{equation*}
+\end{proof}

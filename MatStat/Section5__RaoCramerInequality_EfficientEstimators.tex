@@ -1,0 +1,217 @@
+\section{Неравенство Рао"--~Крамера. Эффективные оценки}
+
+В течение курса мы часто рассматриваем отдельно дискретный и абсолютно непрерывный случай.
+Для того, чтобы избежать дублирования \sout{кода} выкладок, введём понятие \textit{доминирующей меры} и сформулируем теорему Радона"--~Никодима, 
+позволяющую нам записывать всё в виде интегралов.
+
+\begin{defn}
+    Будем говорить, что семейство распределений $\mathcal{P}$ \textit{доминируется} мерой $\mu$, если 
+    \begin{gather*}
+        \mu(A) = 0 \; \Rightarrow \; \mathbb{P} (A) = 0 \\ 
+        \forall \: \mathbb{P} \in \mathcal{P}, \; \forall\, A \in \mathfrak{B}^n.
+    \end{gather*}
+    Обозначается $\mathcal{P} \ll \mu$.
+\end{defn}
+
+\begin{exmp}
+    Пусть $\mathcal{P} = \mathbf{N}(a, \sigma^2), \: \theta = (a, \sigma^2)$.
+    Несложно убедиться, что это семейство доминируется мерой Лебега $\lambda$.
+
+    Рассмотрим семейство $\mathcal{P} = \bigl\{ \mathbf{Pois}(\theta)\colon \theta > 0\bigr\}$.
+    Оно доминируется \textit{считающей мерой} $\nu$~--- формальному эквиваленту количества элементов множества.
+    Область значений пуассоновской случайной величины~--- $\mathbb{N}_0 = \mathbb{N} \cup \{0\}$, тогда
+    \begin{equation*}
+        \nu(A) = \bigl| A \cap \mathbb{N}_0 \bigr|.
+    \end{equation*}
+\end{exmp}
+
+\hypertarget{Radon_Nikodim_thm}{}
+\begin{namedthm}[Теорема Радона"--~Никодима]
+    Рассмотрим статистическую структуру $(\mathbb{R}^n, \mathfrak{B}^n, \mathcal{P}_\theta)$.
+    Если $\mathcal{P}_\theta \ll \mu$, то
+    \begin{equation*}
+        \exists \, p(x, \theta)\colon \; \Probab (A) = \int\limits_{A} p(x, \theta) \mu(dx) \quad \forall \, A \in \mathfrak{B}^n
+    \end{equation*}
+    где интеграл понимается в смысле Лебега.
+
+    В этом случае говорят, что семейство $\mathcal{P}_\theta$ абсолютно непрерывно относительно меры $\mu$.
+\end{namedthm}
+
+\begin{rmrk}
+    Ранее в курсе вводилось определение абсолютно непрерывной случайной величины и её распределения.
+    Учитывая только что сформулированную теорему, мы теперь понимаем, что имелась в виду абсолютная непрерывность относительно меры Лебега $\lambda$.
+    Так что корректнее в этом случае было бы всюду писать $\int \ldots \lambda(dx)$, но мы опускали это, дабы не загромождать запись и не устрашать читателя.
+\end{rmrk}
+
+\begin{exmp}
+    В случае пуассоновского распределения мы можем положить $\mu = \nu$~--- считающая мера, а $p(x, \theta) = \begin{cases}
+        0, & x \notin \mathbb{N}_0 \\
+        \Probab(\xi = x), & x \in \mathbb{N}_0
+    \end{cases}$.
+    Тогда интеграл превратится в привычную сумму:
+    \begin{equation*}
+        \int\limits_A p(x, \theta) \nu(dx) = 
+        \sum\limits_{k = 0, \, k \in A}^{+\infty} \Probab (\xi = k) = 
+        \sum\limits_{k = 0, \, k \in A}^{+\infty} e^{-\theta} \frac{\theta^k}{k!}.
+    \end{equation*}
+\end{exmp}
+Перейдём теперь к делу.
+
+\vspace{5mm}
+Пусть $\Sample$  —  некоторая выборка с функцией правдоподобия $L(\mathbf{X}, \theta)$ относительно некоторой меры $\mu$, доминирующей рассматриваемое семейство распределений. 
+Введём функцию ${\varphi(\theta)=\int\limits_{\mathbf{R}^{n}} T(x) L(x, \theta) \mu(d x)<\infty}$, в дальнейшем считая, что она дифференцируема необходимое число раз.
+
+\begin{defn}
+    Функция правдоподобия $L(\mathbf{X}, \theta)$ \textit{удовлетворяет условиям регулярности для $m$-й производной}, если существует
+    \begin{equation*}
+        \cfrac{d^{m} \varphi(\theta)}{d \theta^{m}}=\int\limits_{\mathbb{R}^{n}} T(x) \cfrac{\partial^{m}}{\partial \theta^{m}}L(x, \theta) \mu(d x),
+    \end{equation*}
+    причём множество $\left\{ {x\colon L(x,\theta) > 0} \right\}$ не зависит от параметра $\theta$.
+\end{defn}
+
+\begin{exmp}
+    Условиям регулярности удовлетворяют многие модели: биномиальная, пуассоновская, нормальная, гамма-распределение (а следовательно, и экспоненциальная, и $\chi^2$) и т.д.
+    Требование независимости множества значений исследуемой случайной величины от параметра $\theta$ существенно: например, равномерное распределение $\mathbf{U}[0, \theta]$ относится к нерегулярным моделям.
+    Это происходит из-за того, что при дифференцировании интеграла, пределы интегрирования которого зависят от параметра, появляются дополнительные слагаемые. 
+    Т.е. менять местами интегрирование и дифференцирование нельзя, и к нерегулярным моделям изложенная ниже теория неприменима.
+\end{exmp}
+
+\begin{defn}
+    Функция $U(\mathbf{X}, \theta) = \cfrac{\partial \ln L(\mathbf{X}, \theta)}{\partial \theta}$ называется \textit{функцией вклада}.
+\end{defn}
+\textbf{Утверждение.} 
+    Если функция правдоподобия удовлетворяет условиям регулярности для первой производной, то $\MExp U(\mathbf{X}, \theta) = 0$. 
+    В самом деле,
+    \begin{multline*}
+        \MExp U(\mathbf{X}, \theta) = \int\limits_{\mathbb{R}^n} U(x, \theta) L(x, \theta) \mu(dx) = 
+        \int\limits_{\mathbb{R}^n} \cfrac{\partial \ln L(x, \theta)}{\partial \theta} L(x, \theta) \mu(dx) = \\
+        \int\limits_{\mathbb{R}^n} \cfrac{1}{L(x, \theta)} \cfrac{\partial L(x, \theta)}{\partial \theta} L(x, \theta) \mu(dx) = 
+        \int\limits_{\mathbb{R}^n} \cfrac{\partial L(x, \theta)}{\partial \theta} \mu(dx) = \{\text{регулярность}\}\\
+        = \cfrac{\partial}{\partial \theta} \int\limits_{\mathbb{R}^n} L(x, \theta) \mu(dx) 
+        = \cfrac{\partial}{\partial \theta} ~ 1 = 0.
+    \end{multline*}
+Из этого, в частности, вытекает, что для регулярных моделей ${\Var U(\mathbf{X}, \theta) = \MExp U^2(\mathbf{X}, \theta)}$.
+
+\vspace{5mm}
+Посчитаем дисперсию функции вклада:
+\begin{multline*}
+    \Var U(\mathbf{X}, \theta) = 
+    \Var \cfrac{\partial \ln L(\mathbf{X}, \theta)}{\partial \theta} = 
+    \Var \cfrac{\partial \ln\prod\limits_{i = 1}^n { f_{\theta}(X_i)} }{\partial \theta}  = \\
+    \Var \cfrac{\partial \sum\limits_{i = 1}^n {\ln f_{\theta}(X_i)} }{\partial \theta}  = 
+    \Var \sum\limits_{i = 1}^n \cfrac{\partial {\ln f_{\theta}(X_i)} }{\partial \theta}  =
+    \{\text{независимость выборки}\} = \\
+    \sum\limits_{i = 1}^n \Var \cfrac{\partial {\ln f_{\theta}(X_i)} }{\partial \theta}  = 
+    \{\text{однородность выборки}\} = \\
+    n \,\Var \cfrac{\partial {\ln \,f_{\theta}(X_1)} }{\partial \theta}  = 
+    n \,\Var U(X_1, \theta) = n \, i_1(\theta).
+\end{multline*}
+Здесь за $i_1(\theta)$ обозначена дисперсия функции вклада от выборки из одного элемента.
+
+\begin{defn}
+    Пусть $\mathbf{X} = \Sample$~--- выборка объёма $n$.
+    Величину $i_n(\theta) = \Var U(\mathbf{X}, \theta)$ называют \textit{фишеровской информацией, содержащейся в выборке размера $n$}.
+\end{defn}
+
+\begin{namedthm}[Неравенство Рао"--~Крамера]
+    Пусть $\Sample$ — выборка, $L(\mathbf{X}, \theta)$ удовлетворяет условиям регулярности для первой производной и $\tau(\theta)$  —  дифференцируемая функция $\theta$. Тогда:
+    \begin{enumerate}
+        \item Для любой $~T(\mathbf{X})$~--- несмещённой оценки $\tau(\theta)$, справедливо неравенство:
+        \begin{gather*}
+            \Var T(\mathbf{X}) \geqslant 
+            \cfrac{\bigl( \tau'(\theta) \bigr)^2}{n \, i_1(\theta)} = 
+            \cfrac{\bigl( \tau'(\theta) \bigr)^2}{\Var U(\mathbf{X}, \theta)}
+            \quad \Always
+        \end{gather*}
+        
+        \item Равенство достигается ${\color{red}\Leftrightarrow} \; \exists \, a_n(\theta)\colon ~ T(\mathbf{X})-\tau(\theta)=a_{n}(\theta) \cdot U(\mathbf{X}, \theta)$
+    \end{enumerate}
+\end{namedthm}
+
+\begin{proof}
+    Из условий регулярности $L(\mathbf{X}, \theta)$ для следует:
+    \begin{gather*}
+        \int L(x, \theta) \mu(d x)=1 
+        \quad {\color{red}\Rightarrow } \quad
+        \int \cfrac{\partial L(x, \theta)}{\partial \theta} \mu(d x)=0 \\
+        \int T(x) L(x, \theta) \mu(d x)=\MExp T(\mathbf{X})=\tau(\theta) 
+        \quad {\color{red}\Rightarrow } \quad
+        \int T(x) \cfrac{\partial L(x, \theta)}{\partial \theta} \mu(d x)=\tau'(\theta)
+    \end{gather*}
+
+    Заметим, что
+    \begin{equation*}
+        \cfrac{\partial L(x, \theta)}{\partial \theta}=\cfrac{\partial \ln L(x, \theta)}{\partial \theta} \cdot L(x, \theta)
+    \end{equation*}
+
+    Откуда следует:
+    \begin{gather*}
+        \int U(x, \theta) L(x, \theta) \mu(d x) = 0 \; {\color{red}\Leftrightarrow} \; \MExp \bigl[U(\mathbf{X}, \theta)\bigr]=0 \\
+        \int T(x) U(x, \theta) L(x, \theta) \mu(d x) = \tau'(\theta) \; {\color{red}\Leftrightarrow} \; \MExp \bigl[ T(\mathbf{X}) U(\mathbf{X}, \theta) \bigr] = \tau'(\theta)
+    \end{gather*}
+
+    Вычитая из второго равенства первое, умноженного на $\tau(\theta) = \MExp \left[ T(\mathbf{X}) \right]$, получаем:
+    \begin{equation*}
+        \MExp\left[T(\mathbf{X}) U(\mathbf{X}, \theta)\right] - \MExp\left[T(\mathbf{X})\right] \, \MExp\left[U(\mathbf{X}, \theta)\right] = 
+        \tau'(\theta) - 0 \cdot \tau(\theta) = 
+        \tau'(\theta)
+    \end{equation*}
+
+    В левой части полученного равенства стоит ковариация случайных величин $T(\mathbf{X})$ и $U(\mathbf{X},\theta)$:
+    \begin{equation*}
+        \operatorname{cov}_{\theta}\bigl(T(\mathbf{X}), U(\mathbf{X}, \theta)\bigr)=\tau'(\theta)
+    \end{equation*}
+
+    Из неравенства Коши-Буняковского:
+    \begin{equation*}
+        \bigl(\tau'(\theta)\bigr)^{2}=\operatorname{cov}_{\theta}^{2} \bigl(T(\mathbf{X}), \, U(\mathbf{X}, \theta)\bigr) \leqslant 
+        \Var T(\mathbf{X}) \,\Var U(\mathbf{X}, \theta) = 
+        \Var T(\mathbf{X}) \, n \, i_1(\theta),
+    \end{equation*}
+
+    что равносильно п.1 теоремы:
+    \begin{equation*}
+        \Var T(\mathbf{X}) \geqslant \cfrac{\bigl(\tau'(\theta)\bigr)^{2}}{n \, i_1(\theta)}
+    \end{equation*}
+
+    Равенство достигается, если статистика и функция вклада линейно связаны (опять же, следствие неравенства Коши-Буняковского):
+    \begin{equation}
+        \label{connection_of_efficient_estimator_and_score}
+        T(\mathbf{X})=\varphi(\theta) U(\mathbf{X}, \theta)+\psi(\theta) 
+        \; {\color{red}\Rightarrow } \;
+        \tau(\theta)=\psi(\theta), \; a_{n}(\theta)=\varphi(\theta).
+    \end{equation}
+\end{proof}
+
+\iffalse
+% Определение Черновой, конфликтующее с обозначениями в нашем курсе
+    Рассмотрим некоторый класс оценок $K=\left\{\hat{\theta}\left(\mathbf{X}\right)\right\}$ параметра $\theta$.
+    \begin{defn}
+        Говорят, что оценка $\theta^{*}\left(\mathbf{X}\right) \in K$ является эффективной оценкой параметра $\theta$ в классе $K$, если для любой другой оценки $\hat{\theta} \in K$ имеет место неравенство:
+        \begin{equation*}
+            E\left(\theta^{*}-\theta\right)^{2} \leqslant \MExp(\hat{\theta}-\theta)^{2}~ \forall \theta \in \Theta
+        \end{equation*}
+    \end{defn}
+    Обозначим класс несмещённых оценок:
+    \begin{equation*}
+        K_{0}=\left\{\hat{\theta}\left(\mathbf{X}\right): E \hat{\theta}=\theta, \forall \theta \in \Theta\right\}
+    \end{equation*}
+    Оценка, эффективная в $K_0$ называется просто \textit{эффективной}.
+
+    Для оценки $\theta^{*} \in K_{0}$ по определению дисперсии
+    \begin{equation*}
+        \MExp\left(\theta^{*}-\theta\right)^{2}=\MExp\left(\theta^{*}-\MExp \theta^{*}\right)^{2}=\Var \theta^{*}
+    \end{equation*}
+\fi
+
+Оценки, обращающие неравенство Рао"--~Крамера в равенство, выделяются в отдельный класс.
+\begin{defn}
+    \textit{Эффективная оценка} $T(\mathbf{X})$~--- это несмещённая оценка параметра $\theta$ (или функции $\tau(\theta)$), дисперсия которой совпадает с нижней гранью в неравенстве Рао"--~Крамера.
+\end{defn}
+
+\begin{rmrk}
+    Если существует эффективная оценка для функции $\tau(\theta)$, то ни для какой другой функции от $\theta$, кроме линейного преобразования $\tau(\theta)$, эффективной оценки существовать не будет. 
+    Это следует из \eqref{connection_of_efficient_estimator_and_score}.
+\end{rmrk}
+Так как дисперсия любой оценки в регулярной модели не может быть меньше нижней грани, определяемой неравенством Рао"--~Крамера, то каждая эффективная оценка является оптимальной.
+Обратное, в силу предыдущего замечания, неверно.

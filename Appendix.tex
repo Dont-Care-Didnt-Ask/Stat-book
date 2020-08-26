@@ -1,0 +1,101 @@
+\appendix
+\chapter{Дополнительные главы теории вероятностей}
+\section{Усиленный закон больших чисел}
+\hypertarget{SLLN}{}
+\begin{namedthm}[Усиленный закон больших чисел в форме Колмогорова]
+Пусть $\xi_1, \xi_2, \ldots, \xi_n, \ldots, $~--- независимые одинаково распределённые случайные величины (сокращённо н.о.р.с.в.). Тогда 
+\begin{enumerate}
+    \item Если существует $\mathbb{E}{\xi_1} = a$, то $\displaystyle \myprob{\lim\limits_{n \to \infty} \cfrac{1}{n} \sum\limits_{i = 1}^n \xi_i = a} = 1$. 
+    
+    Иными словами, $\displaystyle \cfrac{1}{n} \sum\limits_{i = 1}^n \xi_i \stackrel{\text{п.н.}}{\longrightarrow} a $.
+    
+    \item Если существует $\displaystyle \lim\limits_{n \to \infty} \cfrac{1}{n} \sum\limits_{i = 1}^n \xi_i = a$, то существует $\mathbb{E}\xi_1 = a$.
+\end{enumerate}
+\end{namedthm}
+
+\section{Обобщённое неравенство Чебышёва}
+\hypertarget{cheb}{}
+\begin{namedthm}[Обобщённое неравенство Чебышёва] 
+    Пусть функция $g$ не убывает и неотрицательна на $\mathbb{R}$. 
+    Если $\mathbb{E}g(\xi) < +\infty$, то для любого $x \in \mathbb{R}$
+    \begin{equation*}
+        \mathbb{P}(\xi \geqslant x) \leqslant \frac{\mathbb{E} g(\xi)}{g(x)}.
+    \end{equation*}
+\end{namedthm}
+\begin{proof}
+    Заметим, что $\myprob{\xi \geqslant x} \leqslant \mathbb{P}\bigl( g(\xi) \geqslant g(x) \bigr)$, поскольку функция $g$ не убывает. 
+    Оценим последнюю вероятность по неравенству Маркова, которое можно применять в силу неотрицательности $g(x)$
+    \begin{equation*}
+        \mathbb{P}\biggl( g(\xi) \geqslant g(x) \biggr) \leqslant \frac{\mathbb{E} g(\xi)}{g(x)}
+    \end{equation*}
+\end{proof}
+
+Используя эту теорему, можно получить экспоненциально убывающую оценку (в то время как оценки по неравествам Чебышёва и Маркова убывают по степенному закону).
+\begin{namedthm}[Chernoff bound]
+    Пусть $a > 0$. Если существует $\mathbb{E} \left[ e^{a \xi} \right]$, то
+    \begin{equation*}
+        \mathbb{P}(\xi > x) \leqslant e^{-ax} \, \mathbb{E} \left[ e^{a \xi} \right].
+    \end{equation*}
+\end{namedthm}
+
+
+\chapter{Таблицы основных распределений}
+\begin{mytable}
+\begin{center}
+    \caption{Дискретные распределения.}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline Распределение & $\mathbb{P}(\xi=k)$ & $\mathrm{E} \xi$ & $\mathrm{D} \xi$ & $\varphi(t)$ \\[6pt]
+        \hline \doublerow{Бернулли $\operatorname{B}(p)$}{$p \in (0;1)$} & \doublerow{$\mathbb{P}(\xi=1)=p$}{$\mathbb{P}(\xi=0)=q$} & $p$ & $pq$ & $q+p e^{it}$ \\[12pt]
+        \hline \doublerow{Биномиальное $\operatorname{Bi}(n, p)$}{$p \in (0;1),~ n = 1, 2, \ldots$} & $C_{n}^{k} \, p^{k}(1-p)^{n-k}$ & $np$ & $npq$ & $(q+p e^{i t})^{n}$ \\[12pt]
+        \hline \doublerow{Пуассона $\operatorname{Pois}(\lambda)$}{$\lambda > 0$} & $\cfrac{\lambda^{k}}{k!}\cdot e^{-\lambda}$ & $\lambda$ & $\lambda$ & $e^{\lambda (e^{i t}-1)}$ \\[12pt]
+        \hline \doublerow{Геометрическое $\operatorname{Geom}(p)$}{$p \in (0;1), k = 1, 2, \ldots$} & $p q^{k-1}$ & $\cfrac{1}{p}$ & $\cfrac{q}{p^2}$ & $\cfrac{p}{1-q e^{i t}}$ \\[15pt]
+        \hline \doublerow{Отрицательное биномиальное $\operatorname{NB}(r, p)$}{$p \in (0;1), ~r = 1, 2, \ldots$} & $C_{r-1 + k}^k \, p^r q^{k-1}$ & $\cfrac{r}{p}$ & $\cfrac{rq}{p^2}$ & $\left(\cfrac{p}{1-q e^{i t}}\right)^r$ \\[18pt]
+        \hline
+    \end{tabular}
+\end{center}
+\end{mytable}
+
+\begin{mytable}
+\begin{center}
+    \caption{Абсолютно непрерывные распределения.}
+    \vspace{-4.0mm} %Убрать вертикальный пробел из-за слишком широкой таблицы
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline Распределение & $f_{\xi}(x)$ & $\mathbb{E} \xi$ & $\mathbb{D} \xi$ & $\varphi(t)$ \\[6pt]
+        \hline \doublerow{Равномерное $\operatorname{U}([a, b])$}{$a<b$} & $\cfrac{1}{b-a} \cdot \mathrm{I}(x \in [a;b])$ & $\cfrac{a+b}{2}$ & $\cfrac{b-a}{12}$ & $\cfrac{e^{i t b}-e^{i t a}}{i t(b-a)}$ \\[14pt]
+        \hline \doublerow{Показательное $\operatorname{Exp}(\lambda)$}{$\lambda > 0$} & $\lambda e^{-\lambda x} \cdot \mathrm{I} (x > 0)$ & $\cfrac{1}{\lambda}$ & $\cfrac{1}{\lambda^{2}}$ & $\cfrac{1}{1 - it / \lambda}$\\[14pt]
+        \hline \doublerow{Гамма $\operatorname{\Gamma(\lambda, \alpha)}$}{$\alpha>0, \lambda>0$} & $\cfrac{\lambda^{\alpha}}{\Gamma(\alpha)} \, x^{\alpha-1} e^{-\lambda x} \cdot \mathrm{I}(x > 0)$ & $\cfrac{\alpha}{\lambda}$ & $\cfrac{\alpha}{\lambda^{2}}$ & $\left(\cfrac{1}{1 - it / \lambda}\right)^{\alpha}$ \\[18pt]
+        \hline \doublerow{Нормальное $\operatorname{N}(a, \sigma^{2})$}{$a \in \mathbb{R}, \sigma>0$} & $\cfrac{1}{\sigma \sqrt{2 \pi}} \, e^{-(x-a)^{2}/2 \sigma^{2}}$ & $a$ & $\sigma^{2}$ & $\mathlarger{e^{a i t-\sigma^{2} t^{2}/2}}$ \\
+        \hline \doublerow{Коши $\operatorname{C}(a, \sigma)$}{$a \in \mathbb{R}, \sigma>0$} & $\cfrac{1}{\pi} \cdot \cfrac{\sigma}{\sigma^{2}+(x-a)^{2}}$ & - & - & $\mathlarger{e^{a i t-\sigma|t|}}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+\end{mytable}
+
+\begin{mytable}
+    \begin{center}
+        \caption{Фишеровская информация, содержащаяся в выборке размера 1.}
+        \vspace{3mm}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|}
+            \hline Модель        & $\operatorname{N}(\theta, \sigma^2)$ & $\operatorname{N}(\mu, \theta^2)$ & $\operatorname{\Gamma}(\theta, \alpha)$ & $\operatorname{C}(\theta, \sigma^2)$ & $\operatorname{Bi}(k, \theta)$  & $\operatorname{Pois}(\theta)$ & $\operatorname{NB}(r, \theta)$ \\[6pt]
+            \hline $i_1(\theta)$ & $\cfrac{1}{\sigma^2}$                & $\cfrac{2}{\theta^2}$             & $\cfrac{\alpha}{\theta^2}$              & $\cfrac{1}{2}$                       & $\cfrac{k}{\theta(1 - \theta)}$ & $\cfrac{1}{\theta}$           & $\cfrac{r}{\theta(1 - \theta)^2}$ \\[12pt]
+            \hline
+        \end{tabular}
+    \end{center}
+\end{mytable}
+
+\begin{mytable}
+    \begin{center}
+        \caption{Эффективные оценки в регулярных моделях.}
+        \vspace{3mm}
+        \begin{tabular}{|c|c|c|c|}
+            \hline Модель                                  & $\tau(\theta)$               & $\tau^*(\mathbf{X})$                                                   & $\Var \tau^*(\mathbf{X})$ \\[12pt]
+            \hline $\operatorname{N}(\theta, \sigma^2)$    & $\theta$                     & $\overline{X} = \cfrac{1}{n} \sum\limits_{i=1}^{n} X_i$                & $\cfrac{\sigma^2}{n}$ \\[12pt]
+            \hline $\operatorname{N}(\mu, \theta^2)$       & $\theta^2$                   & $S^2 = \cfrac{1}{n} \sum\limits_{i=1}^{n} \left(X_i - \mu\right)^2$    & $\cfrac{2\theta^4}{n}$ \\[12pt]
+            \hline $\operatorname{\Gamma}(\theta, \alpha)$ & $\theta$                     & $\cfrac{\overline{X}}{\alpha}$                                         & $\cfrac{\theta^2}{\alpha n}$ \\[12pt]
+            \hline $\operatorname{Bi}(k, \theta)$          & $\theta$                     & $\cfrac{\overline{X}}{k}$                                              & $\cfrac{\theta(1 - \theta)}{kn}$ \\[12pt]
+            \hline $\operatorname{Pois}(\theta)$           & $\theta$                     & $\overline{X}$                                                         & $\cfrac{\theta}{n}$ \\[12pt]
+            \hline $\operatorname{NB}(r, \theta)$          & $\cfrac{\theta}{1 - \theta}$ & $\cfrac{\overline{X}}{r}$                                              & $\cfrac{\theta}{rn(1 - \theta)^2}$ \\[12pt]
+            \hline
+        \end{tabular}
+    \end{center}
+\end{mytable}

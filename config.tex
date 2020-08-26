@@ -1,0 +1,122 @@
+\documentclass[oneside,final,14pt]{extreport}
+
+%Общий вид и оформление
+\usepackage{vmargin}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{microtype}
+
+\setpapersize{A4}
+\setmarginsrb{2cm}{1.5cm}{2cm}{1.5cm}{0pt}{0mm}{0pt}{13mm}
+\linespread{1.05}
+\raggedbottom
+\sloppy
+
+% Для зачеркивания текста
+\usepackage[normalem]{ulem}
+
+%Русский язык
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+%Математические формулы
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\allowdisplaybreaks
+
+%Таблицы
+\usepackage{adjustbox}
+\usepackage{hhline}
+\usepackage{multirow}
+\usepackage{caption}
+
+\newcommand{\doublerow}[2]{\begin{tabular}{@{}c@{}}#1 \\ #2\end{tabular}}
+
+\DeclareCaptionType{mytype}[Таблица][Список] %Название таблицы без окружения table
+\newenvironment{mytable}{\captionsetup{type=mytype}}{}
+
+%Графика
+\usepackage{graphicx}
+\usepackage{tikz-cd}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+
+%Убрать отступ в начале главы
+\usepackage{etoolbox}
+    \makeatletter
+    \patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}
+    \patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}
+    \makeatother
+    
+%Библиография
+\usepackage{csquotes}
+\usepackage[
+    backend=biber, 
+    sorting=nyt,
+    bibstyle=gost-authoryear,
+    citestyle=gost-authoryear
+]{biblatex}
+\addbibresource{src/refs.bib}
+
+%Предметный указатель
+\usepackage{makeidx}
+
+%Прочие пакеты
+\usepackage{relsize}
+\usepackage{enumitem}
+
+%Запретить переносить сноски на следующую страницу
+\interfootnotelinepenalty=10000
+
+%Гиперссылки
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%Убрать myprob везде
+\newcommand\myprob[1]{{\mathbb{P}(#1)}}
+
+%Оформление определений, теорем, доказательств и т.п.
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewenvironment{proof}{{\bfseries Доказательство.}}{\qed}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Определение}
+\newtheorem*{exmp}{Пример}
+\newtheorem*{symb}{Обозначение}
+\newtheorem*{rmrk}{Замечание}
+\newtheorem*{task}{Задача}
+
+\theoremstyle{plain}
+\newtheorem*{thm*}{Утверждение}
+\newtheorem*{lem}{Лемма}
+\newtheorem*{crlr}{Следствие}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}}
+\theoremstyle{named}
+\newtheorem*{namedthm}{Теорема}
+
+%Компактный список
+\newcommand\sbullet[1][.5]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+\newenvironment{compactlist}{
+    \begin{list}{{$\sbullet[.75]$}}
+    {\setlength\partopsep{0pt}
+     \setlength\parskip{0pt}
+     \setlength\parsep{0pt}
+     \setlength\topsep{0pt}
+     \setlength\itemsep{0pt}
+    }}
+    {\end{list}}
+
+\newcommand{\CoverName}{Cover} %Нумерация обложки

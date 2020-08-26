@@ -1,0 +1,205 @@
+\section{Статистическая структура. Выборка. Статистика. Порядковые статистики. Вариационный ряд. Эмпирическая функция распределения}
+
+\begin{defn}
+    \textit{Статистическая структура}~--- совокупность $(\mathbb{R}^n, \mathfrak{B}^n, \mathcal{P}_\theta)$, 
+    где $\mathbb{R}^n$~--- выборочное пространство, 
+    $\mathfrak{B}^{n}$~--- борелевская $\sigma$-алгебра на $\mathbb{R}^n$, $\mathcal{P}_\theta$~--- семейство распределений, 
+    определённых на $\mathfrak{B}^n$, параметризованное одно- или многомерным числовым параметром: 
+    $\mathcal{P}_\theta = (\mathbb{P}_{\theta} \colon \theta \in \Theta \subseteq R^{m})$.
+\end{defn}
+
+\newcommand{\MExp}{\mathbb{E}_{\theta}\,} % Mathematical expectation with subscript \theta
+\newcommand{\Var}{\mathbb{D}_{\theta}\,} % Variance with subscript \theta
+\newcommand{\Probab}{\mathbb{P}_{\theta}} % Probability with subscript \theta
+\newcommand{\Always}{\forall \, \theta \in \Theta} 
+%\begin{rmrk} 
+%    В дальнейшем такие числовые характеристики параметризованного распределения $\mathcal{P}_{\theta}$, как математическое ожидание $\mathbb{E}_{\theta}$ и дисперсия $\mathbb{D}_{\theta}$, для краткости будем обозначать как $\mathbb{E}$ и $\mathbb{D}$ соответственно.
+%\end{rmrk}
+
+\newcommand{\Sample}{\bigl( X_1, \ldots, X_n \bigr)}
+\begin{defn}
+    \textit{Выборка} $\mathbf{X} = \Sample$ объёма $n$~--- набор из $n$ независимых и одинаково распределённых случайных величин\footnote{Вообще говоря, в приложениях возникают также выборки, состоящие из зависимых или разнораспределённых элементов, но изучение их свойств не входит в этот курс.}, имеющих такое же распределение, как и наблюдаемая случайная величина $\xi$.
+\end{defn}
+
+До того, как эксперимент проведён, выборка~--- набор случайных величин, после~--- набор чисел из множества возможных значений случайной величины. 
+Числовой набор $\boldsymbol{x} = (x_1, \ldots, x_n)$ будем называть \textit{реализацией выборки}.
+
+\begin{rmrk}
+    Статистическая структура очень похожа на многомерное \hyperlink{induced_prob_space}{\textit{индуцированное вероятностное пространство}}.
+    Отличие заключается в том, что если ранее мы использовали распределение лишь одной случайной величины~$\xi$, то здесь используется целое семейство.
+    Почему?
+    Дело в том, что мы ещё не знаем, каковы параметры исследуемого распределения.
+    Задача математической статистики как раз и заключается в том, чтобы их найти, основываясь на наблюдениях~--- реализациях выборок.
+
+    Отметим также то, что на лекциях или в книгах $\mathcal{P}_\theta$ может называться семейством \textit{вероятностных мер}.
+    Это тоже верно, но может внести путаницу~--- распределение случайной величины действительно является мерой, определённой на борелевской $\sigma$-алгебре.
+    Однако вероятностная мера, вообще говоря, не связана ни с какой случайной величиной~--- это просто отображение из некоторой $\sigma$-алгебры событий в вещественные числа, удовлетворяющее аксиомам неотрицательности, ограниченности и счётной аддитивности.
+    А распределение случайной величины~--- это композиция прообраза и вероятностной меры: $P_{\xi} = \mathbb{P} \circ \xi^{-1}$.
+    Т.е. распределение содержит информацию о конкретной случайной величине, с некоторыми фиксированными параметрами.
+    Именно поэтому мы используем семейство распределений.
+    Нам не нужно много вероятностных мер~--- нам нужно много распределений с разными наборами параметров.
+
+    Следует обратить внимание на то, что поскольку распределение зависит от параметра $\theta$, то от него будут зависеть и математическое ожидание, и дисперсия, и прочие числовые характеристики налюдаемой случайной величины.
+    Например, для "<честной"> монетки математическое ожидание при 10 подбрасываниях должно быть равно 5, а дисперсия~--- $npq = 10 \cdot \frac{1}{2} \cdot \frac{1}{2} = 2.5$. 
+    Но в случае асимметричной монетки с вероятностью выпадения "<решки">, равной $0.7$, математическое ожидание будет равно 7, а дисперсия~--- $2.1$.
+    Поэтому лучше явно указывать зависимость от параметра и писать $\Probab\,, \MExp, \Var$.
+\end{rmrk}
+
+\begin{defn}
+    \textit{Статистика} или \textit{оценка}~--- измеримая функция от выборки, не зависящая от любых других параметров.
+\end{defn}
+
+Чаще всего статистики используются для поиска неизвестного параметра распределения $\theta$ и имеют вид $T\colon \mathbb{R}^n \mapsto \Theta$.
+%\begin{defn}
+%\it Оценка}~--- статистика $T(\mathbf{X}) \colon \mathbb{R}^n \mapsto \Theta$.
+%\end{defn}
+
+%\begin{rmrk}
+%    В некоторых источниках оценка и статистика используются как синонимичные понятия. 
+%    В любом случае, обычно рассматриваются именно функции из $\mathbb{R}^n$ в $\Theta$, так как они используются для предсказания значения параметра $\theta$.
+%\end{rmrk}
+
+\begin{defn}
+    \textit{Вариационный ряд}~--- набор случайных величин $X_{(1)}, \ldots, X_{(n)}$, который получается при упорядочивании выборки $\mathbf{X} = \Sample$ по возрастанию на каждом элементарном исходе. 
+
+    $X_{(1)}(\omega)=\min \bigl(X_{1}(\omega), \ldots, X_{n}(\omega)\bigr)$~--- \textit{минимальная порядковая статистика}, 
+    $X_{(n)}(\omega)=\max \bigl(X_{1}(\omega), \ldots, X_{n}(\omega)\bigr)$~--- соответственно, \textit{максимальная}.
+    Элемент $X_{(k)}$~--- \textit{$k$-я порядковая статистика}. 
+\end{defn}
+
+\begin{rmrk}
+    Согласно нашему определению вариационный ряд \textit{не является выборкой}, хотя бы потому, что разные порядковые статистики, как мы вскоре убедимся, имеют разное распределение.
+    Однако он является статистикой $T\colon \mathbb{R}^n \mapsto \mathbb{R}^n$, так как зависит только от выборки\footnote{Строго говоря, надо бы ещё проверить, является ли функция, осуществляющая переупорядочивание, измеримой, но, пожалуй, это чрезмерный формализм, который скорее отпугнёт читателя, чем поможет ему.}.
+    Порядковые статистики тоже удовлетворяют определению статистики, но являются уже отображениями из $\mathbb{R}^n$ в $\mathbb{R}$.
+\end{rmrk}
+
+\begin{defn}
+    \textit{Эмпирическая функция распределения}, построенная по выборке $X_{1}, \ldots, X_{n}$ объёма $n$,~--- случайная функция $F_{n}^{*}$:
+    \begin{equation*}
+        F_{n}^{*}(y) =\frac{1}{n} \sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y) \quad \forall \, y \in \mathbb{R}
+    \end{equation*}
+\end{defn}
+
+Эмпирическая функция распределения строится по вариационному ряду следующим образом:
+
+\begin{equation*}
+    F_{n}^{*}(y)=\left\{\begin{array}{ll}
+    0, & \text { если } y \leqslant X_{(1)} \\
+    k/n, & \text { если } X_{(k)}<y \leqslant X_{(k+1)} \\
+    1, & \text { если } y> X_{(n)}
+    \end{array}\right.
+\end{equation*}
+
+Конечно, эмпирическая функция распределения тоже зависит от параметра~$\theta$, но её обозначение и так громоздкое, поэтому мы, скрепя сердце, откажемся от идеи явно это подчёркивать.
+
+\begin{exmp}
+    Найдём эмпирические функции распределения для крайних порядковых статистик.
+
+    \begin{gather*}
+        \begin{aligned}
+            F_{(1)}(x)=\Probab \bigl(X_{(1)} < x \bigr) 
+        = 1 - \Probab \bigl(X_{(1)} \geqslant x \bigr) 
+        = 1 - \Probab \bigl(x_{1} \geqslant x, \ldots, x_{n} \geqslant x\bigr) = \\
+        = 1 - \prod_{i=1}^{n} \Probab (x_{i} \geqslant x) 
+        = 1 - \bigl(\Probab ({x}_{1} \geqslant x)\bigr)^{n} 
+        = 1 - \bigl(1 - F_{\theta}(x)\bigr)^{n}\!.
+        \end{aligned} \\
+        \begin{aligned}
+            F_{(n)}(x) 
+            = \Probab \bigl(X_{(n)} < x\bigr) 
+            = \Probab \bigl(x_{1} < x, \ldots, x_{n} < x\bigr) = \\
+            = \prod_{i=1}^{n} \Probab (x_{i} < x) 
+            = \bigl(\Probab ({x}_{1} < x)\bigr)^{n} 
+            = \bigl( F_{\theta}(x) \bigr)^n \!.
+        \end{aligned}
+    \end{gather*}
+\end{exmp}
+
+\begin{namedthm}[Свойства эмпирической функции распределения]\leavevmode
+    \begin{enumerate}
+        \item Пусть $\Sample$~--- выборка из распределения $\mathcal{P}_{\theta}$ с функцией распределения $F_{\theta}$ и пусть $F_{n}^{*}$ — эмпирическая функция распределения, построенная по этой выборке. 
+        Тогда $F_{n}^{*}(y) \xrightarrow[n \to \infty]{\text{p}} F_{\theta}(y)$ для любого $y \in \mathbb{R}$ и $\Always.$
+        \item Для любого y $\in \mathbb{R}$ и любого $\theta \in \Theta$:
+        \begin{enumerate}[label={\arabic*)}]
+            \item $\MExp F_{n}^{*}(y) = F_{\theta}(y)$, т.е. $F_{n}^{*}(y)$~--- несмещённая оценка для $F_{\theta}(y)$.
+            \item $\Var F_{n}^{*}(y)=\cfrac{F_{\theta}(y)\bigl(1-F_{\theta}(y)\bigr)}{n} \: \leqslant \: \cfrac{1}{4n}$\, .
+            \item Пусть $\sigma^2(y) = \bigl(1 - F_{\theta}(y)\bigr)F_{\theta}(y)$. 
+            Тогда
+            $$\sqrt{n}\bigl( F_{n}^{*}(y)-F_{\theta}(y) \bigr) \; \xrightarrow[n \to \infty]{\text{d}} \; \mathbf{N}\bigl(0, \sigma^2(y)\bigr),$$ 
+            т.е. $F_{n}^{*}(y)$~--- асимптотически нормальная оценка для $F_{\theta}(y)$.
+            \item $n F_{n}^{*}(y) \sim \mathbf{Bi}\bigl(n, F_{\theta}(y)\bigr).$
+            \item $F_{n}^{*}(y) \xrightarrow[n \to \infty]{\text{п.н.}} F_{\theta}(y).$
+        \end{enumerate}
+    \end{enumerate}
+\end{namedthm}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item 
+            $F_{n}^{*}(y)=\frac{1}{n} \sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)$, при этом случайные величины $\mathrm{I}(X_{1}<y)$, $\mathrm{I}(X_{2}<y), \ldots$ независимы и одинаково распределены, их математическое ожидание конечно:
+            \begin{equation*}
+                \MExp \mathrm{I}(X_{1}<y)=1 \cdot \Probab (X_{1}<y)+0 \cdot \Probab (X_{1} \geqslant y) = \Probab (X_{1}<y)=F_{\theta}(y) < \infty
+            \end{equation*}
+            Следовательно, можно применить ЗБЧ в форме Хинчина:
+            \begin{equation*}
+                F_{n}^{*}(y)=\cfrac{\sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)}{n} \xrightarrow[n \to \infty]{\text{p}} \MExp \mathrm{I}(X_{1}<y)=F_{\theta}(y) \quad \Always.
+            \end{equation*}
+        \item 
+            Заметим, что:
+            \begin{gather*}
+                \mathrm{I}(X_{1}<y) \sim  \mathbf{Bi}\bigl(1, F_{\theta}(y)\bigr) \Rightarrow \MExp \mathrm{I}(X_{1}<y) = F_{\theta}(y), \\
+                \Var \mathrm{I}(X_{1}<y) = F_{\theta}(y)(1-F_{\theta}(y)) \quad \Always.
+            \end{gather*}
+            \begin{enumerate}[label={\arabic*)}]
+                \item Случайные величины $\mathrm{I}(X_{i}<y)$ одинаково распределены, поэтому:
+                \begin{equation*}
+                    \MExp F_{n}^{*}(y) = \MExp \, \cfrac{\sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)}{n} =\cfrac{\sum\limits_{i=1}^{n} \MExp \mathrm{I}(X_{i}<y)}{n}=\cfrac{n \MExp \mathrm{I}(X_{1}<y)}{n}=F_{\theta}(y)  
+                \end{equation*}
+                
+                \item Случайные величины $\mathrm{I}(X_{i}<y)$ независимы и одинаково распределены, поэтому:
+                \begin{multline*}
+                    \Var F_{n}^{*}(y)
+                    = \Var \, \cfrac{\sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)}{n}
+                    = \cfrac{\sum\limits_{i=1}^{n} \Var \mathrm{I}(X_{i}<y)}{n^{2}}
+                    = \\
+                    = \cfrac{n\Var \mathrm{I}(X_{1}<y)}{n^{2}}
+                    = \cfrac{F_{\theta}(y)\bigl(1-F_{\theta}(y)\bigr)}{n}
+                \end{multline*}
+                Значения $F_{\theta}(y)$ принадлежат отрезку $[0, 1]$, а значит, произведение $F_{\theta}(y)\bigl(1 - F_{\theta}(y)\bigr) \leqslant \cfrac{1}{2}\cdot\left(1 - \cfrac{1}{2}\right) = \cfrac{1}{4}~$ (нетрудно убедиться, что 1/2~--- точка максимума). 
+                А значит, $\Var F_{n}^{*} \leqslant \cfrac{1}{4n}\,$. 
+                
+                \begin{rmrk}
+                    Пользуясь полученной оценкой на дисперсию и неравенством Чебышёва, можно показать, что эмпирическая функция распределения сходится к истинной по вероятности:
+                    \begin{equation*}
+                        \Probab\bigl(|F_n^*(y) - F_{\theta}(y)| \geqslant \varepsilon \bigr) ~\leqslant~ \cfrac{\Var F_n^*(y)}{\varepsilon^2} ~\leqslant~ \cfrac{1}{4n\varepsilon^2} \xrightarrow[n \to \infty]{} 0 ~~\forall \,y \in \mathbb{R} ~ \Always.
+                    \end{equation*}
+                    Заметим также, что ввиду 5-го свойства это замечание бесполезно.
+                \end{rmrk}
+            \end{enumerate}
+        \item 
+            Применим ЦПТ:
+            \begin{multline*}
+                \sqrt{n}\bigl( F_{n}^{*}(y)-F_{\theta}(y) \bigr)
+                = \sqrt{n}\left(\cfrac{\sum \mathrm{I}(X_{i}<y)}{n}-F_{\theta}(y)\right) 
+                = \\
+                = \cfrac{\sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)-n F_{\theta}(y)}{\sqrt{n}} 
+                = \cfrac{\sum\limits_{i=1}^{n} \mathrm{I}(X_{i}<y)-n \MExp\mathrm{I}(X_{1}<y)}{\sqrt{n}} 
+                \xrightarrow[n \to \infty]{\text{d}} \\
+                \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}\bigl(0, \Var\mathrm{I}(X_{1}<y)\bigr)
+                = \mathbf{N}\Bigl(0, \bigl(1-F_{\theta}(y)\bigr)F_{\theta}(y)\Bigr).
+            \end{multline*}
+        \item 
+            Следует из устойчивости по суммированию биномиального распределения. 
+            Поскольку $\mathrm{I}\left(X_{i}<y\right)$ независимы и имеют биномиальное распределение $\mathbf{Bi}(1, F_{\theta}(y))$, то их сумма
+            \begin{equation*}
+                n F_{n}^{*}(y)=\mathrm{I}\left(X_{1}<y\right)+\ldots+\mathrm{I}\left(X_{n}<y\right)
+            \end{equation*}
+            имеет биномиальное распределение $\mathbf{Bi}(n, F_{\theta}(y))$.
+            
+        \item 
+            Выберем произвольный $y \in \mathbb{R}$. 
+            $\xi_i = \mathrm{I}(X_i < y)$ независимы, одинаково распределены и $\exists~\MExp \xi_i = F_{\theta}(y)$.
+            Тогда можно применить \hyperlink{SLLN}{усиленный закон больших чисел в форме Колмогорова}: ${\Probab\left(\lim\limits_{n \to \infty} \cfrac{1}{n} \sum\limits_{i = 1}^{n}\xi_i = F_{\theta}(y)\right) = 1} \; \Always$. 
+            Но это то же самое, что $\Probab\left({\lim\limits_{n \to \infty} F_n^*(y) = F_{\theta}(y)}\right) = 1 \; \Always$, а это в точности определение сходимости почти наверное.
+    \end{enumerate}  
+\end{proof}

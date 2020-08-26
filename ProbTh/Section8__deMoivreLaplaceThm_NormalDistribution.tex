@@ -1,0 +1,45 @@
+\section{Испытания Бернулли. Теорема Муавра"--~Лапласа. Нормальное распределение}
+
+\begin{namedthm} [Локальная предельная теорема Муавра"--~Лапласа]
+    Пусть $S_n$ - число успехов в $n$ испытаниях Бернулли с вероятностью успеха $0 < p < 1$. 
+    Пусть $n \to \infty$, тогда $n p(1-p) {\longrightarrow} \infty$, и 
+    $$ \forall \, m \in \mathbb{Z}: 0 \leqslant m \leqslant n \quad \mathbb{P}\left(S_{n}=m\right)=\frac{1}{\sigma \sqrt{2 \pi} } e^{-\frac{x^{2}}{2}}\left(1+\underline{O}\left(\frac{1}{\sigma}\right)\right), $$
+    где $x = \frac{m - np}{\sigma},$ а $\sigma=\sqrt{\mathbb{D} S_{n}}=\sqrt{n p(1-p)}$.
+\end{namedthm}  
+
+\begin{namedthm}[Интегральная теорема Муавра"--~Лапласа]
+Если выполнено условие локальной теоремы и $C$ - произвольная положительная константа, то равномерно по $a$ и $b$ из отрезка $[-C,C]$ (пусть $b \geqslant a$)
+$$\mathbb{P}\left(a \leqslant \frac{S_{n}-n p}{\sqrt{n p(1-p)}} \leqslant b\right) \xrightarrow[n \to +\infty]{} \frac{1}{\sqrt{2 \pi}} \int\limits_{a}^{b} e^{-\frac{x^{2}}{2}} d x.$$
+\end{namedthm} 
+
+\begin{defn}
+    Случайная величина $\xi$ имеет \textit{нормальное (гауссовское) распределение} с параметрами $a$ и $\sigma^2$, где $a \in \mathbb{R}, \sigma > 0$, если $\xi$ имеет следующую плотность распределения: 
+$$f(x)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-a)^{2}}{2 \sigma^{2}}}, \quad x \in \mathbb{R}.$$
+\end{defn}
+
+\subsubsection{Матожидание и дисперсия нормального распределения}
+
+Найдем матожидание и дисперсию для \textit{стандартного} нормального распределения, т.е. для нормального распределения с параметрами $\alpha = 0$ и $\sigma^2 = 1$:
+%$$\mathbb{E} \xi=\int\limits_{-\infty}^{\infty} x f_{\xi}(x) %d x=\frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{\infty} x %e^{-x^{2} / 2} d x=0,$$
+\begin{equation*}
+    \mathbb{E}\xi = 
+    \int\limits_{-\infty}^{\infty} x f_{\xi}(x) dx =
+    \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\infty} x e^{\frac{-x^2}{2}} dx = 
+    -\frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{\infty} d\left( e^{\frac{-x^2}{2}}\right) = 
+    \left. -e^{\frac{-x^2}{2}}\right|_{-\infty}^{\infty} = 0
+\end{equation*}
+
+%так как под интегралом стоит нечётная функция. Далее,
+Далее, 
+\begin{multline*}
+    \mathbb{E} \xi^{2}=\frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{\infty} x^{2} e^{-x^{2} / 2} d x=\frac{2}{\sqrt{2 \pi}} \int\limits_{0}^{\infty} x^{2} e^{-x^{2} / 2} d x=-\frac{2}{\sqrt{2 \pi}} \int\limits_{0}^{\infty} x d e^{-x^{2} / 2}= \\
+    =-\left.\frac{2 x}{\sqrt{2 \pi}} e^{-x^{2} / 2}\right|_{0} ^{\infty}+2 \int\limits_{0}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^{2} / 2} d x=0+\int\limits_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^{2} / 2} d x=1.
+\end{multline*}
+
+Поэтому $\mathbb{D}\xi = \mathbb{E}\xi^2 - (\mathbb{E}\xi)^2 = 1 - 0 = 1.$
+
+Теперь рассмотрим случайную величину $\eta$ с нормальным распределением в общем виде (с параметрами $\alpha$ и $\sigma^2$). Тогда $\xi = \frac{\eta - \alpha}{\sigma}$ - случайная величина со \textit{стандартным} нормальным распределением. Далее, т.к. $\mathbb{E}\xi = 0$, $\mathbb{D}\xi = 1$, то 
+\begin{gather*}
+    \mathbb{E}\eta = \mathbb{E}(\sigma \xi + \alpha) = \sigma \mathbb{E} \xi + \alpha = \alpha, \\
+    \mathbb{D}\eta = \mathbb{D}(\sigma \xi + \alpha) = \sigma^2 \mathbb{D}\xi = \sigma^2.
+\end{gather*}

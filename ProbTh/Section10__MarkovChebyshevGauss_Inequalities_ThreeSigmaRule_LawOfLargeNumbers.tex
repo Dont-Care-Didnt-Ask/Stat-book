@@ -1,0 +1,104 @@
+\section{Неравенства Маркова, Чебышёва и Гаусса. Правило «трех сигм». Закон больших чисел в форме Чебышёва}
+\begin{namedthm}[Неравенство Маркова]
+    Если $\mathbb{E}|\xi| < \infty$, то для любого $x > 0$
+    \begin{equation*}
+        \mathbb{P}\bigl( |\xi| \geqslant x \bigr) \leqslant \frac{\mathbb{E}|\xi|}{x}.
+    \end{equation*}
+\end{namedthm}
+
+\begin{proof}
+    \begin{equation*}
+        \mathrm{I}(A) \sim \mathbf{Bi}(p),~ p = \myprob{\mathrm{I}(A) = 1} = \myprob{A} = \mathbb{E}\,\mathrm{I}(A)
+    \end{equation*}
+    
+    Индикаторы прямого и противоположного событий связаны равенством $\mathrm{I}(A) + \mathrm{I}(\overline{A}) = 1.$ 
+    Поэтому
+    \begin{equation*}
+        |\xi|=|\xi| \cdot \mathrm{I}\bigl(|\xi|<x\bigr) + |\xi| \cdot \mathrm{I}\bigl(|\xi| \geqslant x \bigr) \geqslant
+        |\xi| \cdot \mathrm{I} \bigl( |\xi| \geqslant x \bigr) \geqslant 
+        x \cdot \mathrm{I} \bigl(|\xi| \geqslant x \bigr)
+    \end{equation*}
+    
+    Тогда $\mathbb{E}|\xi| \geqslant \mathbb{E} \bigl(x \cdot \mathrm{I}(|\xi| \geqslant x) \bigr) = x \cdot \mathbb{P} \bigl( |\xi| \geqslant x \bigr)$. 
+    Осталось разделить обе части этого неравенства на положительное число $x$.
+\end{proof}
+
+\begin{namedthm}[Неравенство Чебышёва]
+    Если $\mathbb{D}\xi$ существует, то для любого $\varepsilon > 0$
+    \begin{equation*}
+        \mathbb{P}(|\xi-\mathbb{E} \xi| \geqslant \varepsilon) \leqslant \frac{\mathbb{D} \xi}{\varepsilon^{2}}.
+    \end{equation*}
+\end{namedthm}
+
+\begin{proof}
+    Для $\varepsilon > 0$ неравенство $|\xi - \mathbb{E}\xi| \geqslant \varepsilon \Leftrightarrow (\xi - \mathbb{E}\xi)^2 \geqslant \varepsilon^2$, поэтому
+    \begin{multline*}
+        \mathbb{P}(|\xi-\mathbb{E} \xi| \geqslant \varepsilon) = 
+        \mathbb{P}\left((\xi-\mathbb{E} \xi)^{2} \geqslant \varepsilon^{2}\right) \leqslant \\ 
+        \text{\{Неравенство Маркова\}} \leqslant 
+        \frac{\mathbb{E}(\xi-\mathbb{E} \xi)^{2}}{\varepsilon^{2}} =
+        \frac{\mathbb{D} \xi}{\varepsilon^{2}}.
+    \end{multline*}
+\end{proof}
+
+\begin{defn}
+    В неравенстве Чебышёва в качестве $\varepsilon$ можно брать любое положительное число. 
+    Если взять в качестве $\varepsilon$ величину $3\sigma$, где $\sigma$~--- стандартное отклонение (то есть именно \textit{корень} из дисперсии), то получится
+    \begin{equation*}
+        \mathbb{P}\bigl( |\xi-\mathbb{E} \xi|> 3 \sigma \bigr) \leqslant 
+        \frac{\mathbb{D} \xi}{9 \sigma^2} = 
+        \frac{\mathbb{D} \xi}{9 \, \mathbb{D} \xi} =
+        \frac{1}{9} \Leftrightarrow 
+        \mathbb{P}\bigl( |\xi-\mathbb{E} \xi| \leqslant 3 \sigma \bigr) \geqslant 
+        1-\frac{1}{9} = 
+        \frac{8}{9}
+    \end{equation*}
+    Это соотношение называется \textit{правилом трёх сигм}.
+\end{defn}
+
+\begin{namedthm}[Неравенство Гаусса]
+    Пусть $X$~--- одномодальная случайная величина с модой $m$ и пусть $a^2$ - математическое ожидание $(X - m)^2.$ Тогда
+    \begin{equation*}
+        \mathbb{P}(|X-m|>k) \leq
+        \begin{cases}
+            \left(\cfrac{2 a}{3 k}\right)^{2}, & \text{если $k \geqslant \frac{2 a}{\sqrt{3}}$;} \\
+            1 - \cfrac{k}{a \sqrt{3}}, & \text{если $0 \leqslant k \leqslant \frac{2 a}{\sqrt{3}}$.}
+        \end{cases}
+    \end{equation*}
+\end{namedthm}
+
+\begin{defn}
+    Говорят, что последовательность случайных величин $\xi_1, \xi_2, \ldots$ с конечными первыми моментами \textit{удовлетворяет закону больших чисел}, если
+    \begin{equation*}
+        \frac{\biggl( \xi_{1}+\ldots+\xi_{n} \biggr) - \biggl(\mathbb{E} \xi_{1}+\ldots+\mathbb{E} \xi_{n} \biggr)}{n} \xrightarrow[n \to +\infty]{\text{P}} 0 %\: \text {при} \: n \to +\infty.
+    \end{equation*}
+\end{defn}
+\begin{namedthm}[Закон больших чисел в форме Чебышёва]
+    Для любой последовательности $\xi_1, \xi_2, \ldots$ попарно независимых и одинаково распределённых случайных величин с конечным вторым моментом $\mathbb{E}\xi_1^2 < \infty$ имеет место сходимость
+    \begin{equation*}
+        \frac{\xi_{1}+\ldots+\xi_{n}}{n} \xrightarrow[]{\text{p}} \mathbb{E} \xi_{1}
+    \end{equation*}
+\end{namedthm}
+
+\begin{proof}
+    Обозначим через $S_n = \xi_1 + \ldots + \xi_n$ сумму первых $n$ случайных величин. Из линейности матожидания получим
+    \begin{equation*}
+        \mathbb{E}\left(\frac{S_{n}}{n}\right)=\frac{\mathbb{E} \xi_{1}+\ldots+\mathbb{E} \xi_{n}}{n}=\frac{n \mathbb{E} \xi_{1}}{n}=\mathbb{E} \xi_{1}
+    \end{equation*}
+    
+    Пусть $\varepsilon > 0.$ Воспользуемся неравенством Чебышёва:
+    \begin{multline*}
+        \mathbb{P}\left(\left|\frac{S_{n}}{n}-\mathbb{E}\left(\frac{S_{n}}{n}\right)\right| \geqslant \varepsilon\right) \leqslant \frac{\mathbb{D}\left(\frac{S_{n}}{n}\right)}{\varepsilon^{2}}
+        = \frac{\mathbb{D} S_{n}}{n^{2} \varepsilon^{2}}
+        = \frac{\mathbb{D} \xi_{1}+\ldots+\mathbb{D} \xi_{n}}{n^{2} \varepsilon^{2}}= \\
+        = \frac{n \mathbb{D} \xi_{1}}{n^{2} \varepsilon^{2}}
+        = \frac{\mathbb{D} \xi_{1}}{n \varepsilon^{2}} \xrightarrow[n \to +\infty]{} 0,
+    \end{multline*}
+    так как $\mathbb{D}\xi_1 < \infty$. Дисперсия суммы превратилась в сумму дисперсий в силу попарной независимости слагаемых, из-за которой все ковариации $\operatorname{cov}(\xi_i, \xi_j)$ по свойству ковариации обратились в нуль при $i \neq j$.
+\end{proof}
+
+\begin{rmrk}
+    Условие попарной независимости является избыточным~--- достаточно равенства нулю ковариций, т.е. некоррелированности случайных величин.
+    Интересно, что даже это условие можно ослабить и потребовать только неотрицательности ковариаций.
+    Доказательство этого оставим читателю в качестве упражнения. 
+\end{rmrk}

@@ -1,0 +1,194 @@
+\section{Интервальное оценивание: Предельные теоремы и неравенство Чебышёва}
+
+Иногда не удаётся найти центральную статистику и не хочется использовать метод точечной оценки.
+В таком случае прибегают к использованию неравенств теории вероятностей или, при больших объёмах выборки, предельным теоремам (как правило, ЦПТ).
+В последнем случае получаются приближённые, или асимптотические доверительные интервалы~--- вероятность того, что оцениваемый параметр будет накрыт таким интервалом, 
+стремится к $\gamma$ с ростом объёма выборки $n$.
+При построении асимптотических ДИ бывают полезными асимптотические свойства используемых оценок.
+Разберёмся по порядку.
+
+\subsubsection{Неравенство Чебышёва}
+
+\begin{exmp}
+    Пусть есть выборка $\mathbf{X} = \Sample, X_i \sim \mathbf{Bi}(1, \theta)$.
+    Требуется найти $\gamma$-доверительный интервал для параметра $\theta$.
+
+    Применив ЗБЧ Хинчина, можно показать, что выборочное среднее $\overline{X}$ является состоятельной оценкой параметра $\theta$, т.е.
+    \begin{equation*}
+        \Probab \Bigl( |\overline{X} - \theta| \leqslant \varepsilon \Bigr) \xrightarrow[n \to \infty]{} 1.
+    \end{equation*}
+    
+    Используя неравенство Чебышёва, мы можем явно оценить вероятность больших отклонений:
+    \begin{equation*}
+        \Probab \Bigl( |\overline{X} - \theta| \geqslant \varepsilon \Bigr) \leqslant 
+        \frac{\Var \overline{X}}{\varepsilon^2} = 
+        \frac{\Var X_1}{n \varepsilon^2}.
+    \end{equation*}
+    Так как $\theta \in (0, 1)$, $\Var X_1 = \theta(1 - \theta) \leqslant \cfrac{1}{4}\, .$
+    Используя это и переворачивая знак неравенства, получаем:
+    \begin{equation*}
+        \Probab \Bigl( |\overline{X} - \theta| \leqslant \varepsilon \Bigr) \geqslant 1 - \frac{1}{4 n \varepsilon^2}.
+    \end{equation*}
+    Если теперь обозначить правую часть как $\gamma$ и выразить $\varepsilon$ через $\gamma$ и $n$
+    \begin{equation*}
+        \gamma = 1 - \frac{1}{4 n \varepsilon^2} \quad \Rightarrow \quad \varepsilon = \frac{1}{2 \sqrt{n (1 - \gamma)}}
+    \end{equation*}
+    получим искомый доверительный интервал:
+    \begin{gather*}
+        \Probab \left( |\overline{X} - \theta| \leqslant \frac{1}{2 \sqrt{n (1 - \gamma)}} \right) \geqslant \gamma \; \Rightarrow \\
+        \theta \in \left( \overline{X} - \frac{1}{2 \sqrt{n (1 - \gamma)}}, 
+                       \; \overline{X} + \frac{1}{2 \sqrt{n (1 - \gamma)}} \right) \text{ с вероятностью } \gamma.
+    \end{gather*}
+\end{exmp}
+
+\begin{rmrk}
+    Следует обратить внимание на соотношение $\gamma = 1 - \cfrac{1}{4 n \varepsilon^2}$.
+    Оно выражает связь между объёмом выборки, уровнем надёжности и длиной доверительного интервала.
+    %Длину интервала можно интерпретировать как точность нашей оценки.
+    Зафиксировав любые два параметра, мы единственным образом находим значение третьего~--- 
+    например, мы можем оценить размер выборки $n$, необходимой для достижения уровня надёжности $\gamma_0$ при длине $2 \, \varepsilon_0$.
+    Или наоборот, найти уровень надёжности $\gamma$, имея реализацию выборки с уже фиксированным размером $n_0$ при желаемой длине $2 \, \varepsilon_0$.
+\end{rmrk}
+
+\subsubsection{Асимптотические доверительные интервалы}
+\begin{exmp}
+    Дана выборка $\mathbf{X} = \Sample, \; X_i \sim \mathbf{Pois}(\theta), \; \theta > 0$. 
+    Объём выборки $n$ достаточно велик.
+    Требуется оценить параметр $\theta$.
+
+    $X_1, \ldots, X_n$ независимы, одинаково распределены и невырождены, так как ${\Var X_i = \theta > 0}$.
+    Кроме того, ${\sum\limits_{i = 1}^{n} X_i \sim \mathbf{Pois}(n\theta)}$.
+    Тогда, согласно центральной предельной теореме:
+    \begin{equation*}
+        \frac{\sum\limits_{i=1}^{n} X_i - \MExp \left( \sum\limits_{i=1}^{n} X_i \right)}{\sqrt{\Var \left( \sum\limits_{i=1}^{n} X_i \right)}} =
+        \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} 
+        \xrightarrow[n \to \infty]{\text{d}} 
+        \mathbf{N}(0, 1).
+    \end{equation*}
+
+    Найдём теперь такие $g_1, g_2$, что:
+    \begin{gather*}
+        \Probab \left(g_1 > \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \right) \xrightarrow[n \to \infty]{} \frac{1 - \gamma}{2} \\
+        \Probab \left(g_1 \leqslant \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \leqslant g_2 \right) \xrightarrow[n \to \infty]{} \gamma \\
+        \Probab \left(g_2 < \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \right) \xrightarrow[n \to \infty]{} \frac{1 - \gamma}{2}
+    \end{gather*}
+    Поскольку объём выборки велик, мы можем воспользоваться тем, что распределение стремится к нормальному и положить 
+    $g_1 = z_{(1 - \gamma) / 2}, g_2 = z_{(1 + \gamma)/2}$, где $z_{\alpha}$~--- $\alpha$-квантиль нормального распределения.
+
+    В силу симметрии нормального распределения $-z_{(1 - \gamma) / 2} = z_{(1 + \gamma)/2}$, поэтому мы можем объединить два неравенства
+    \begin{gather*}
+        z_{(1 - \gamma)/2} \leqslant \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \\
+        z_{(1 + \gamma)/2} \geqslant \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}}
+    \end{gather*}
+    в одно:
+    \begin{equation*}
+        z_{(1 + \gamma)/2} \geqslant \left| \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \right|
+    \end{equation*}
+    Теперь надо решить его относительно $\theta$.    
+    Сразу предупредим, что результат вряд ли будет очень красивым.
+    Для краткости опустим индекс у квантиля.
+    
+    \begin{gather*}
+        z \geqslant \left| \frac{\sum\limits_{i=1}^{n} X_i - n\theta}{\sqrt{n\theta}} \right| \\
+        z \geqslant \left| \sqrt{n} \, \frac{\overline{X} - \theta}{\sqrt{\theta}} \right| \\
+        \frac{\sqrt{\theta}\, z}{\sqrt{n}} \geqslant |\overline{X} - \theta| \\
+        \frac{\theta \, z^2}{n} \geqslant \overline{X}^2 - 2\overline{X}\theta + \theta^2 \\
+        \theta^2 - \left(2\overline{X} + \frac{z^2}{n}\right)\theta + \overline{X}^2 \leqslant 0
+    \end{gather*}
+    Мы получили квадратное неравенство относительно~$\theta$.
+    Коэффициент при~$\theta^2$ положителен, и мы рассматриваем область меньше или равную нулю, 
+    а значит, решением (если оно существует) действительно будет интервал.
+
+    Найдём дискриминант:
+    \begin{gather*}
+        D = b^2 - 4ac = \left(2\overline{X} + \frac{z^2}{n}\right)^2 - 4 \overline{X}^2 = \\
+        4 \overline{X}^2 + 4\overline{X}\frac{z^2}{n} + \frac{z^4}{n^2} - 4 \overline{X}^2 = 
+        \frac{z^2}{n} \left(4 \overline{X} + \frac{z^2}{n}\right).
+    \end{gather*}
+
+    И затем границы интервала:
+    \begin{equation*}
+        \theta_{1, 2} = \frac{-b \pm \sqrt{D}}{2a} = 
+        \frac{2 \overline{X} + \frac{z^2}{n} \pm \frac{|z|}{\sqrt{n}} \sqrt{4\overline{X} + \frac{z^2}{n}} }{2} = 
+        \overline{X} + \frac{z^2}{2n} \pm \frac{|z|}{2\sqrt{n}} \sqrt{4\overline{X} + \frac{z^2}{n}}.
+    \end{equation*}
+    
+    Результат и впрямь громоздкий.
+    Но если $n$ велико, слагаемые порядка меньше, чем $\frac{1}{\sqrt{n}}$, не будут оказывать большого влияния.
+    Опустив их, мы получим менее страшный ответ:
+    \begin{equation*}
+        \Probab \left(
+        \theta \in \left( \overline{X} - \frac{z \sqrt{\overline{X}}}{\sqrt{n}}, 
+                          \overline{X} + \frac{z \sqrt{\overline{X}}}{\sqrt{n}} \right)
+        \right) \xrightarrow[n \to \infty]{} \gamma.
+    \end{equation*}
+
+    Ещё раз напомним, что здесь $z = z_{(1 + \gamma)/2}$~--- квантиль порядка $\frac{1 + \gamma}{2}$ стандартного нормального распределения.
+\end{exmp}
+
+\subsubsection{Асимптотические интервалы с асимптотически эффективными оценками}
+
+Напомним, что \textit{эффективной} называется такая несмещённая оценка, дисперсия которой совпадает с нижней гранью в неравенстве Рао"--~Крамера, 
+а \textit{асимптотически эффективной}~--- оценка, дисперсия которой стремится к нижней грани с ростом объёма выборки:
+\begin{equation*}
+    \Var T_{\text{eff.}}(\mathbf{X}) = \frac{\bigl(\tau^{\prime}(\theta)\bigr)^2}{n i_1(\theta)}, \quad 
+    \Var T_{\text{as.eff.}}(\mathbf{X}) \xrightarrow[n \to \infty]{} \frac{\bigl(\tau^{\prime}(\theta)\bigr)^2}{n i_1(\theta)}
+\end{equation*}
+где $i_1(\theta) = \Var U(\mathbf{X}, \theta) = \Var \cfrac{\partial \ln L(\mathbf{X}, \theta)}{\partial \theta}$~---
+функция информации.
+Далее, для простоты, будем рассматривать случай $\tau(\theta) \equiv \theta$.
+Тогда
+\begin{equation*}
+    \Var T_{\text{eff.}}(\mathbf{X}) = \frac{1}{n i_1(\theta)}, \quad 
+    \Var T_{\text{as.eff.}}(\mathbf{X}) \xrightarrow[n \to \infty]{} \frac{1}{n i_1(\theta)}.
+\end{equation*}
+
+Мы знаем, что при достаточно общих условиях оценки максимального правдоподобия являются, во-первых, асимптотически нормальными,
+во-вторых, асимптотически эффективными, и в-третьих, они обладают свойством инвариантности.
+Пусть $\theta^* = \theta^*(\mathbf{X})$~--- ОМП для параметра $\theta$.
+Пользуясь первым утверждением, мы можем сказать, что 
+\begin{equation*}
+    \frac{\theta^* - \theta}{\sqrt{\Var \theta^*}} 
+    \xrightarrow[n \to \infty]{\text{d}}
+    \mathbf{N}(0, 1).
+\end{equation*}
+Пользуясь вторым утверждением, мы можем заменить дисперсию на $\frac{1}{n i_1(\theta)}$:
+\begin{equation*}
+    (\theta^* - \theta) \sqrt{n i_1(\theta)}
+    \xrightarrow[n \to \infty]{\text{d}}
+    \mathbf{N}(0, 1).
+\end{equation*}
+Наконец, воспользовавшись свойством инвариантности и свойствами сходимости случайных величин, 
+мы можем заменить\footnote{Обоснование этому и предыдущему "<мы можем"> читатель может найти в "<Математической статистике"> Ивченко, Медведева на стр.~76, формула~(2.65)} 
+$i_1(\theta)$ на $i_1(\theta^*)$:
+\begin{equation*}
+    (\theta^* - \theta) \sqrt{n i_1(\theta^*)}
+    \xrightarrow[n \to \infty]{\text{d}}
+    \mathbf{N}(0, 1).
+\end{equation*}
+
+\begin{exmp}
+    Пусть требуется построить доверительный интервал для параметра~$\theta$ бернуллиевской модели~$\mathbf{Bi}(1, \theta)$.
+    
+    Внимательный читатель помнит, что $\overline{X}$~--- оценка максимального правдоподобия для параметра $\theta$.
+    Функция $L(\mathbf{X}, \theta) = \theta^{\sum\limits_{i=1}^{n} X_i} (1 - \theta)^{n - \sum\limits_{i=1}^{n} X_i}$ дважды дифференцируема по $\theta$ на $(0, 1)$, 
+    максимум единственен и достигается во внутренней точке множества $\Theta = (0, 1)$.
+    Значит, (согласно теореме в конце параграфа об ОМП) наша оценка асимптотически нормальна и асимптотически эффективна, и мы можем применить описанный выше метод.
+    Осталось вспомнить, что для бернуллиевского распределения функция информации $i_1(\theta) = \frac{1}{\theta(1 - \theta)}$.
+    
+    Для нормального распределения центральный доверительный интервал в силу симметрии является и кратчайшим, 
+    поэтому нам достаточно взять квантили $z_{(1 - \gamma)/2}, z_{(1 + \gamma)/2}$.
+    \begin{gather*}
+        \Probab \left( z_{(1 - \gamma)/2} > \sqrt{n} \, \frac{(\overline{X} - \theta)}{\sqrt{ \overline{X}(1 - \overline{X})}} \right) 
+        \xrightarrow[n \to \infty]{} \frac{1 - \gamma}{2} \\
+        \Probab \left( z_{(1 + \gamma)/2} < \sqrt{n} \, \frac{(\overline{X} - \theta)}{\sqrt{ \overline{X}(1 - \overline{X})}} \right) 
+        \xrightarrow[n \to \infty]{} \frac{1 - \gamma}{2}
+    \end{gather*}
+    Разрешая неравенства относительно $\theta$, получаем асимптотический доверительный интервал:
+    \begin{equation*}
+        \Probab \left(\theta \in \left(\overline{X} - \frac{z_{(1 + \gamma)/2}}{\sqrt{n}} \sqrt{\overline{X}(1 - \overline{X})}, 
+                                    \: \overline{X} + \frac{z_{(1 + \gamma)/2}}{\sqrt{n}} \sqrt{\overline{X}(1 - \overline{X})} \right) \right) 
+        \xrightarrow[n \to \infty]{} 
+        \gamma.
+    \end{equation*}
+\end{exmp}

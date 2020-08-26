@@ -1,0 +1,202 @@
+\section {Условная вероятность. Независимость событий. Критерий независимости. Формула полной вероятности. Формула Байеса}
+
+\begin{defn}
+    Пусть задано вероятностное пространство $(\Omega, \mathcal{F}, \mathbb{P}), \\ \text{события } {A, B \in \mathcal{F},~ \myprob{B} > 0}$. 
+    \textit{Условная вероятность события $A$ при событии $B$}:
+    \begin{equation*}
+        \myprob{A|B}=\cfrac{\myprob{AB}}{\myprob{B}}
+    \end{equation*}
+\end{defn}
+
+\begin{thm*}
+    Условная вероятность $\myprob{A|B}$~--- вероятность, заданная на $\sigma$-алгебре $\mathcal{F}$.
+\end{thm*}
+
+\begin{proof}
+    Проверим три аксиомы из определения вероятности.
+
+\begin{enumerate}
+    \item 
+        $\forall \, A \in \mathcal{F} \;\; \myprob{A|B} \geqslant 0, \text{т.к.}~ \myprob{AB} \geqslant 0,~ \myprob{B} > 0$
+    \item 
+        $\myprob{\Omega|B} = \cfrac{\myprob{B \cap \Omega}}{\myprob{B}} = \cfrac{\myprob{B}}{\myprob{B}} = 1$
+    \item 
+        Пусть дана некоторая последовательность событий $\it A_1, A_2, \ldots A_n, \ldots$; $A_i A_j = \varnothing~ (i \ne j)$. 
+        Тогда: 
+        \begin{multline*}
+            \mathbb{P}\left(\,\left. \bigcup\limits_{i=1}^\infty A_i \right| B\right) 
+            = \cfrac{\mathbb{P}\left(\left(\, \bigcup\limits_{i=1}^\infty A_i\right) \cap B \right)}{\myprob{B}} 
+            = \cfrac{\mathbb{P}\left(\, \bigcup\limits_{i=1}^\infty\left(A_i \cap B\right) \right)}{\myprob{B}} = \\
+            = \cfrac{\sum\limits_{i=1}^\infty \myprob{A_i \cap B}}{\myprob{B}}
+            = \sum\limits_{i=1}^\infty \myprob{A_i | B}.
+        \end{multline*}
+\end{enumerate}
+\end{proof}
+\begin{rmrk}
+    Некоторые свойства условной вероятности:
+    \begin{enumerate}
+        \item 
+            Если $A \cap B = \varnothing,$ то $\myprob {A | B} = 0.$ 
+        \item 
+            Если $B \subset A$, то $\myprob{A|B} = 1.$ 
+            Например, $\myprob{B|B} = 1.$
+    \end{enumerate}
+\end{rmrk}
+
+\subsubsection{Независимость событий}
+\begin{defn}
+    Пусть есть вероятностное пространство $(\Omega, \mathcal{F}, \mathbb{P})$. 
+    События $A_1, \ldots, A_n \in \mathcal{F}$ называются \textit{независимыми в совокупности}, если \\ 
+    $\forall\: k = \overline{2, n} ~~~ \forall\: i_{1}, \ldots, i_{k} \colon 1 \leqslant i_1 < i_2 < \ldots < i_k \leqslant n$ выполняется:
+    \begin{equation*}
+        \mathbb{P}\left(\, \bigcap\limits_{j=1}^k A_{i_j}\right) = \prod\limits_{j=1}^k \myprob{A_{i_j}}.
+    \end{equation*}
+
+    Иными словами, события независимы в совокупности, если вероятность одновременного наступления \textit{любого набора} из этих событий равна \textit{произведению вероятностей} событий, входящих в этот набор. 
+    В частности, при $n = 2$ события $A$ и $B$ независимы, если $\myprob{AB} = \myprob{A}\myprob{B}$.
+\end{defn}
+
+\begin{namedthm}[Свойства независимых событий]\leavevmode
+    \begin{enumerate}
+        \item 
+            Если $A = \varnothing$ или $\myprob{A} = 0$, то $\forall \: B \colon \myprob{B} > 0$ события $A$ и $B$ независимы.
+        \item 
+            Пусть $A$ и $B$ независимы. Тогда события $\overline{A}$ и $B$, $A$ и $\overline{B}$, $\overline{A}$ и $\overline{B}$ также независимы. 
+        \item 
+            Пусть $A \subset B$ и $\myprob{A} > 0, \, \myprob{B} < 1$. Тогда $A$ и $B$ зависимы. 
+        \item 
+            Если события $A$ и $B$ независимы и $\myprob{B} > 0$, то $\myprob{A|B} = \myprob{A}$.
+    \end{enumerate}
+\end{namedthm}
+
+\begin{proof}
+\begin{enumerate} 
+    \item 
+        Если $A = \varnothing$, то $AB = \varnothing \Rightarrow \myprob{AB} = 0.$ Но $ \myprob{A}\myprob{B} = 0 \cdot \myprob{B} = 0 \Rightarrow \\
+        \Rightarrow \myprob{AB} = \myprob{A} \myprob{B}$.
+        
+        Если же ${\myprob{A} = 0}$, то ${AB \subset A \: \Rightarrow \: \mathbb{P}(AB) \leqslant \myprob{A} = 0}$. 
+        В то же время ${0 = \myprob{AB} = 0 \cdot \myprob{B} = \myprob{A} \myprob{B}}$.
+    \item 
+        Докажем независимость $\overline{A}$ и $B$, представив последнее в виде \\
+        $B = AB \cup \overline{A}B$. Тогда
+        \begin{multline*}
+            \myprob{B} = \myprob{AB} + \myprob{\overline{A}B} = \myprob{A}\myprob{B} + \myprob{\overline{A}B} \Rightarrow \\
+            \Rightarrow \myprob{\overline{A}B} = \myprob{B} - \myprob{A}\myprob{B} = \myprob{B} (1 - \myprob{A}) = \myprob{\overline{A}}\myprob{B}
+        \end{multline*}
+        Независимость $\overline{A}$ и $B$ доказана. 
+        Аналогично доказываются остальные утверждения.
+    \item 
+        Предположим, что события независимы. 
+        Тогда $\myprob{AB} = \myprob{A}\myprob{B},$ но в силу вложенности $A \subset B$: $\myprob{AB} = \myprob{A} > 0$, следовательно, $\myprob{B} = 1$, что противоречит условию.
+    \item 
+        $\myprob{A | B} = \cfrac{\myprob{AB}}{\myprob{B}} = \cfrac{\myprob{A}\myprob{B}}{\myprob{B}} = \myprob{A}$.
+\end{enumerate}
+\end{proof}
+
+\begin{rmrk}
+    В общем случае из попарной независимости событий $A_1, \ldots, A_n$ не следует их независимость в совокупности.
+    \begin{exmp}
+        Рассмотрим правильный тетраэдр, три грани которого окрашены соответственно в красный, синий, зелёный цвета, а четвёртая грань содержит все три цвета. 
+        Событие $R$ (соответственно, $G$, $B$) означает, что выпала грань, содержащая красный (соответственно, зелёный, синий) цвета.
+
+        Т.к. каждый цвет есть на двух гранях из четырёх, то
+        \begin{equation*}
+            \mathbb{P}(R) = \mathbb{P}(G) = \mathbb{P}(B) = \cfrac{1}{2}.
+        \end{equation*}
+        Вероятность пересечения, соответственно:
+        \begin{equation*}
+            \mathbb{P}(RG) = \mathbb{P}(GB) = \mathbb{P}(RB) = \cfrac{1}{4} = \cfrac{1}{2} \cdot \cfrac{1}{2},
+        \end{equation*}
+        следовательно, все события попарно независимы. 
+        Однако вероятность пересечения всех трёх:
+        \begin{equation*}
+            \mathbb{P}(RGB)  = \cfrac{1}{4} \neq \mathbb{P}(R) \mathbb{P}(G) \mathbb{P}(B),
+        \end{equation*}
+        т.е. события не являются независимыми в совокупности. 
+    \end{exmp}
+\end{rmrk}
+
+\begin{symb}
+    \begin{equation*}
+        A_{i}^{(\delta)} =
+        \begin{cases}
+            A_{i}, & \delta = 1; \\
+            \overline{A_{i}}, & \delta = 0.
+        \end{cases}
+    \end{equation*}
+\end{symb}
+
+\begin{namedthm}[Критерий независимости]
+    События $A_1, \ldots, A_n$ независимы в совокупности $\Leftrightarrow \forall ~ \delta_1, \delta_2, \ldots \delta_n \in \{0, 1\}$ выполнено равенство
+    \begin{equation*}
+        \mathbb{P}\left(\, \bigcap_{i=1}^{n} A_{i}^{\left( \delta_{i} \right)} \right)
+        = \prod_{i=1}^{n}\mathbb{P}\left( A_{i}^{\left(\delta_{i}\right)} \right).
+    \end{equation*}
+\end{namedthm}
+
+\begin{namedthm}[Формула полной вероятности]
+    Пусть даны события $A, B_1, \ldots, B_n, \ldots$; $\myprob{B_i} > 0$, причём $B_i B_j = \varnothing~(i \neq j)$ и $\bigcup\limits_{i=1}^{\infty}B_i \supset A~$ (например, $\bigcup\limits_{i=1}^{\infty}B_i = \Omega$). 
+    Тогда справедлива формула:
+    \begin{equation*}
+        \mathbb{P}(A)=\sum\limits_{i=1}^{\infty} \mathbb{P}\left(B_{i}\right) \mathbb{P}\left(A | B_{i}\right).
+    \end{equation*}
+\end{namedthm}
+
+\begin{proof}
+    Достаточно заметить, что при вышеперечисленных условиях $A = \bigcup\limits_{i=1}^{\infty}(AB_i),$ и $AB_i \cap AB_j = \varnothing ~(i \neq j).$ 
+    Тогда, учитывая $\myprob{B_i} > 0$, получаем
+    \begin{equation*}
+        \mathbb{P}(A)=\sum\limits_{i=1}^{\infty} \mathbb{P}\left(A B_{i}\right)=\sum\limits_{i=1}^{\infty} \mathbb{P}\left(B_{i}\right) \frac{\mathbb{P}\left(A B_{i}\right)}{\mathbb{P}\left(B_{i}\right)}=\sum\limits_{i=1}^{\infty} \mathbb{P}\left(B_{i}\right) \mathbb{P}\left(A | B_{i}\right).
+    \end{equation*}
+\end{proof}
+
+\begin{namedthm}[Формулы Байеса]\footnote{Формул\textit{ы}, так как они верны для всех $H_i, \: i = \overline{1, n}$. Впрочем, часто говорят и <<Формула Байеса>>.}
+    Пусть даны события $A, H_1, \ldots, H_n, \ldots$; ${\myprob{A} > 0}$, ${\myprob{H_i} > 0}$, причём $H_i H_j = \varnothing ~(i \neq j)$ и $\bigcup\limits_{i=1}^\infty H_i \supset A$ (например, $\bigcup\limits_{i=1}^{\infty}H_i = \Omega$). Тогда справедливы \textit{формулы Байеса}:
+    \begin{equation*}
+        \mathbb{P}\left(H_{i} | A\right)= \frac{\mathbb{P}\left(H_{i}\right) \mathbb{P}\left(A | H_{i}\right)}{\sum\limits_{j=1}^{\infty} \mathbb{P}\left(H_{j}\right) \mathbb{P}\left(A | H_{j}\right)}, \quad i = \overline{1,n}
+    \end{equation*}
+\end{namedthm}
+\begin{proof}
+    Согласно формуле полной вероятности, в знаменателе дроби стоит вероятность $A$. 
+    Тогда
+    \begin{equation*}
+        \frac{\mathbb{P}\left(H_{i}\right) \mathbb{P}\left(A | H_{i}\right)}{\mathbb{P}(A)}=\frac{\mathbb{P}\left(H_{i}\right) \mathbb{P}\left(A H_{i}\right)}{\mathbb{P}(A) \mathbb{P}\left(H_{i}\right)}=\frac{\mathbb{P}\left(A H_{i}\right)}{\mathbb{P}(A)}=\mathbb{P}\left(H_{i} | A\right) 
+    \end{equation*}
+\end{proof}
+
+Вероятности $P(H_i)$, вычисленные заранее, до проведения эксперимента, называют \textit{априорными вероятностями} (a’priori~--- «до опыта»). 
+Условные вероятности $\myprob{H_i | A}$ называют \textit{апостериорными вероятностями} (a’posteriori~--- «после опыта»). 
+Формула Байеса позволяет переоценить заранее известные вероятности после того, как получено знание о результате эксперимента.
+
+\begin{exmp}
+    Тест на рак имеет надёжность $99\%$ (т.е. вероятность как положительной, так и отрицательной ошибки равна $0{,}01$), рак появляется у $1\%$ населения. 
+    Какова вероятность того, что человек болен раком, если у него позитивный результат теста?
+    
+    Составим таблицу для вероятностей всех возможных событий:
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline \multirow{2}{*} {Результат теста} & \multicolumn{2}{|c|} {Пациент реально болен} \\
+    \cline {2-3} & Да & Нет \\
+    \hline Положительный & $0{,}99 \cdot 0{,}01$ & $0{,}01 \cdot 0{,}99$ \\
+    \hline Отрицательный & $0{,}01 \cdot 0{,}01$ & $0{,}99 \cdot 0{,}99$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    
+    Введём следующие обозначения для событий: $H_{+} = \{\text{пациент болен}\}$, $H_{-} = \{\text{пациент здоров}\}$, $R_{+} = \{\text{положительный результат теста}\}$, \\ $R_{-} = \{\text{отрицательный результат теста}\}$. Найдём вероятность события $H_{+}$ при условии $R_{+}$ по формуле Байеса:
+    \begin{multline*}
+        \mathbb{P}(H_{+}|R_{+}) = \cfrac{\mathbb{P}(H_{+})\mathbb{P}(R_{+}|H_{+})}{\mathbb{P}(H_{+})\mathbb{P}(R_{+}|H_{+}) + \mathbb{P}(H_{-})\mathbb{P}(R_{+}|H_{-})} = \\
+        = \cfrac{0{,}99 \cdot 0{,}01}{(0{,}99 \cdot 0{,}01) + (0{,}01 \cdot 0{,}99)} = 0{,}5
+    \end{multline*}
+    
+    Иными словами, вероятность того, что пациент болен, равна отношению вероятности правильного положительного результата теста к вероятности любого положительного результата.
+    
+    Рассмотрим более общий случай. Пусть $q$~--- вероятность неправильного результата теста, $p$~--- вероятность заболеть раком, тогда
+    \begin{equation*}
+        \mathbb{P}(H_{+}|R_{+}) 
+        = \cfrac{(1-q) p}{(1-q) p+q(1-p)} 
+        = \cfrac{p-q p}{p+q-2 q p}
+    \end{equation*}
+    Эта функция принимает значение $0{,}5$ на диагонали $p = q$; ниже диагонали~--- вероятность выше $0{,}5$, т.е. чтобы верить результатам теста, вероятность болезни должна превышать вероятность его ошибки.
+\end{exmp}

@@ -1,0 +1,320 @@
+\section{Условное математическое ожидание}
+
+\subsection{По Н.И.~Черновой}
+Пусть $\xi$ и $\eta$~--- две случайные величины на некотором вероятностном пространстве, причём $E|\xi|<\infty$; $L=L(\eta)$~--- множество, в котором собраны все случайные величины, имеющие вид $\zeta=g(\eta)$, где $g(x)$~--- произвольная борелевская функция. Скалярным произведением двух случайных величин $\varphi$ и $\zeta$ назовём $(\varphi, \zeta)=\mathbb{E}(\varphi \cdot \zeta)$, если это математическое ожидание существует.
+
+Условное математическое ожидание $\mathbb{E}(\xi | \eta)$ случайной величины $\xi$ относительно $\eta$ можно представлять себе как результат ортогонального проектирования случайной величины $\xi$ на пространство $L$.
+
+Результат проектирования — такая случайная величина $\mathbb{E}(\xi | \eta)=\widehat{\xi}$, для которой выполнено основное и единственное свойство ортопроекции: её разность с $\xi$ ортогональна всем элементам $L$. Ортогональность означает, что для любой $g(\eta) \in L$ обращается в нуль (если вообще существует) скалярное произведение $(\xi-\widehat{\xi}, g(\eta))$, т. е.
+\begin{equation*}
+    \mathbb{E}((\xi-\widehat{\xi}) g(\eta))=0~ \text{или}~ \mathbb{E}(\xi g(\eta))=\mathbb{E}(\widehat{\xi} g(\eta))
+\end{equation*}
+Это свойство называют \textit{тождеством ортопроекции}. Чтобы матожидание существовало всегда, достаточно брать лишь ограниченные функции $g(y)$.
+
+\begin{defn}
+    Пусть $\mathbb{E}|\xi|<\infty$, $L=L(\eta)$~--- множество всех борелевских функций от случайной величины $\eta$. 
+    Условным математическим ожиданием $\mathbb{E}(\xi | \eta)$ называется случайная величина $\widehat{\xi} \in L$, удовлетворяющая тождеству ортопроекции.
+\end{defn}
+
+\subsection{По В.Ю.~Королёву}
+    Встали! Глубоко вздохнули! Сели\ldots
+    
+    Начнём издалека. 
+    Рассмотрим дискретные случайные величины $\xi, \eta$ на вероятностном пространстве $(\Omega, \mathcal{F}, \mathbb{P})$. 
+    $\xi$ принимает значения $y_1, y_2, \ldots$, $\eta$~--- $x_1, x_2, \ldots$.
+    Вспомним определение условной вероятности: ${\mathbb{P}\left( \xi = y_i | \eta = x_j \right) = \cfrac{\mathbb{P}\left( \xi = y_i, \, \eta = x_j\right)}{\mathbb{P}\left(\eta = x_j\right)}}$.
+    Ранее мы проверяли, что условная вероятность является вероятностной мерой на $\sigma$-алгебре $\mathcal{F}$.
+    Рассмотрим теперь следующую величину:
+    \begin{equation}
+        \boxed{\mathbb{E}\left[ \xi | \eta = x_j \right] = 
+        \sum\limits_i y_i \, \mathbb{P}\left(\xi = y_i | \eta = x_j \right) \equiv
+        f(x_j).}
+        \label{cond_exp:discrete}
+    \end{equation}
+    
+    $f(x)$~--- \textit{регрессия} $\xi$ \textit{на} $\eta$. 
+    В математическом анализе изучаются функциональные зависимости~--- каждому значению независимой переменной $x$ соответствует одно определённое значение величины $y = f(x)$.
+    В теории вероятностей и статистике изучаются зависимости между случайными величинами~--- например, $\xi$ и $\eta$.
+    В этом случае при принятии величиной $\eta$ значения $x_j$ случайная величина $\xi$ может принимать разные значения~--- $y_1, y_2, \ldots$.
+    Логично сопоставить $x_j$ среднее этих значений.
+    Таким образом строится \textit{стохастическая зависимость} $f(x)$.
+    Можно записать (пока~--- просто формально)
+    $$ \mathbb{E} \bigl[\xi | \eta \bigr] = f(\eta).$$
+    \textit{Условное математическое ожидание~--- не число, а случайная величина}.
+    
+    Заметим теперь, что введённая нами величина обладает следующим свойством:
+    \begin{equation*}
+        \forall \, B \in \mathfrak{B} \quad \mathbb{E}\bigl[ \mathbb{E}\left( \xi | \eta\right) \rm{I}(\eta \in B)\bigr] = 
+        \mathbb{E} \bigl[ \xi \cdot \rm{I}(\eta \in B) \bigr].
+    \end{equation*}
+    В самом деле,
+    \begin{gather*}
+        \mathbb{E}\bigl[ \mathbb{E}\left( \xi | \eta\right) \rm{I}(\eta \in B)\bigr] = \\
+        \sum\limits_{j \colon x_j \in B} f(x_j) \, \mathbb{P}(\eta = x_j) = 
+        \sum\limits_{j \colon x_j \in B} \biggl( \sum\limits_k y_k \, \mathbb{P}(\xi = y_k \,|\, \eta = x_j) \biggr) \, \mathbb{P}(\eta = x_j) = \\
+        \sum\limits_{j \colon x_j \in B} \sum\limits_k y_k \, \mathbb{P}(\xi = y_k, \, \eta = x_j) = 
+        \mathbb{E} \bigl[ \xi \cdot \rm{I}(\eta \in B)\bigr].
+    \end{gather*}
+
+    Рассмотрим теперь абсолютно непрерывный случай.
+    Пусть $\xi, \eta \sim p_{\xi, \eta}(x, y)$, где $p_{\xi, \eta}(x, y)$~--- плотность совместного распределения.
+    \begin{gather*}
+        \forall \, B \in \mathfrak{B}_{\mathbb{R}^2} \quad \mathbb{P}\bigl( (\xi, \eta) \in B\bigr) = \iint\limits_{B} p_{\xi, \eta}(x, y) \, dxdy, \\
+        p_{\eta} = \int\limits_{-\infty}^{+\infty} p_{\xi, \eta} (x, y)\, dxdy.
+    \end{gather*}
+
+    Здесь некоторая проблема заключается в том, что при абсолютно непрерывном распределении вероятность попасть в конкретную точку равна нулю,
+    и не получится так просто записать условную вероятность:
+    \begin{equation*}
+        \mathbb{P}\left( \xi < x \, |\, \eta = y\right) = \cfrac{\mathbb{P}(\xi < x, \, \eta = y)}{\mathbb{P}(\eta = y)}  = \frac{0}{0} = \; ?
+    \end{equation*}
+
+    Возьмём тогда произвольный $\varepsilon > 0$ и рассмотрим
+    \begin{gather*}
+        \mathbb{P}(\xi < x\, | \, y \leqslant \eta < y + \varepsilon) = \frac{\mathbb{P}(\xi < x, \, y \leqslant \eta < y + \varepsilon)}{\mathbb{P}(y \leqslant \eta < y + \varepsilon)} = \\
+        \frac{\int\limits_{-\infty}^{x} \int\limits_{y}^{y + \varepsilon} p_{\xi, \eta}(x, y) \, dydx}{\int\limits_{y}^{y + \varepsilon} p_{\eta}(y)\,dy} = \text{\{теорема о среднем, } \hat{y}, \tilde{y} \in (y, y + \varepsilon) \} = \\
+        \frac{\varepsilon \cdot \int\limits_{-\infty}^{x} p_{\xi, \eta}(x, \hat{y}) \, dx}{\varepsilon \cdot p_{\eta}(\tilde{y})} \xrightarrow[\varepsilon \to 0]{} 
+        \int\limits_{-\infty}^{x} \frac{p_{\xi, \eta}(x, y)}{p_{\eta}(y)} \, dx \quad \forall \, x \in \mathbb{R}.
+    \end{gather*}
+    Положим по определению
+    $$ p_{\xi | \eta = y}(x) \; \overset{\text{def}}{=} \; \frac{p_{\xi, \eta}(x, y)}{p_{\eta}(y)}.$$
+    Тогда 
+    \begin{equation}
+        \label{cond_exp:abs_continious}
+        \boxed{\mathbb{E} \bigl[ \xi | \eta = y \bigr] = 
+        \int\limits_{-\infty}^{+\infty} x \, p_{\xi | \eta = y}(x) \, dx = 
+        \int\limits_{-\infty}^{+\infty} x \, \frac{p_{\xi, \eta}(x, y)}{p_{\eta}(y)} \, dx \equiv 
+        f(y),}
+    \end{equation}
+    \begin{equation*}
+        \mathbb{E} \bigl[ \xi | \eta \bigr] = f(\eta).
+    \end{equation*}
+    \textit{Условное мат. ожидание $\mathbb{E} \bigl(\xi | \eta\bigr)$~--- это (борелевская) функция от $\eta$.}
+    
+    \vspace{5mm}
+    Заметим, что эта величина также удовлетворяет свойству
+    \begin{equation*}
+        \forall \, B \in \mathfrak{B} \quad \mathbb{E}\bigl[ \mathbb{E}\left( \xi | \eta\right) \rm{I}(\eta \in B)\bigr] = 
+        \mathbb{E} \bigl[ \xi \cdot \rm{I}(\eta \in B) \bigr],
+    \end{equation*}
+    Так как
+    \begin{gather*}
+        \mathbb{E} \left[ \mathbb{E} \left(\xi | \eta\right) \rm{I}(\eta \in B) \right] = 
+        \mathbb{E} \left[ f(\eta) \rm{I}(\eta \in B) \right] = 
+        \int\limits_{B} f(y) p_{\eta}(y)\,dy = \\
+        \int\limits_{B} \left( \int\limits_{-\infty}^{+\infty} x \, \frac{p_{\xi, \eta}(x, y)}{p_{\eta}(y)} \, dx \right) p_{\eta}(y) \,dy = 
+        \int\limits_{B} \int\limits_{-\infty}^{+\infty} x \, p_{\xi, \eta}(x, y) \,dxdy = 
+        \mathbb{E} \bigl[ \xi \cdot \rm{I}(\eta \in B)\bigr].
+    \end{gather*}
+
+    Итак, мы обсудили два частных случая и зачем-то убедились в том, что обе рассмотренные величины обладают общим непонятным свойством.
+    Давайте теперь перейдем к более строгому, формальному опеределению условного математического ожидания и поймём, зачем мы проверяли вышеописанный факт.
+
+    %\vspace{1cm}
+\subsection{Определения. Примеры. Свойства}
+    Рассмотрим вероятностное пространство $(\Omega, \mathcal{F}, \mathbb{P})$.
+    Пусть $\mathcal{A} \subseteq \mathcal{F}$~--- некоторая $\sigma$-подалгебра $\sigma$-алгебры $\mathcal{F}$.
+    \begin{defn}
+        Случайная величина $\eta$ называется $\mathcal{A}$-измеримой, если для $\forall \, B \in \mathfrak{B} \quad \eta^{-1}(B) \in \mathcal{A}$.
+    \end{defn}
+    
+    \begin{defn}
+        \textit{Условным математическим ожиданием} случайной величины~$\xi$ \textit{относительно $\sigma$-алгебры}~$\mathcal{A}$ 
+        называется случайная величина~$\mathbb{E}\left( \xi | \mathcal{A}\right)$, такая~что:
+        \begin{enumerate}
+            \item $\mathbb{E}\left(\xi | \mathcal{A} \right) \; \mathcal{A}$-измерима;
+            \item Для любого события $C \in \mathcal{A} \quad \mathbb{E} \bigl[ \mathbb{E} \left( \xi | \mathcal{A} \right) \rm{I}(C) \bigr] \; = \; \mathbb{E} \bigl[ \xi \, \rm{I}(C) \bigr]$.
+        \end{enumerate}
+    \end{defn}
+
+    \vspace{5mm}
+    \begin{exmp}
+        Пусть $\Omega = \{1, 2, 3, 4\}, \; \mathcal{F} = 2^{\Omega}, \; \mathbb{P}(\omega) = 1/4$ для $\omega = 1, \ldots, 4$. \\
+        Положим $\mathcal{A} = \bigl\{ \varnothing, \{1, 2\}, \{3, 4\}, \Omega \bigr\}$. 
+        Тогда $\mathcal{A}$~--- $\sigma$-алгебра, и $\mathcal{A} \subset \mathcal{F}$. \\
+        Пусть случайная величина $\xi$ имеет вид $\xi(\omega) = \omega^2, \: \omega = 1, \ldots, 4$.
+        Тогда 
+        \begin{equation*}
+            \mathbb{E}\bigl( \xi | \mathcal{A} \bigr) = \begin{cases}
+                1^2 \cdot \mathbb{P}\bigl(\omega = 1 | \omega \in \{1, 2\}\bigr) + 2^2 \cdot \mathbb{P}\bigl(\omega = 2 | \omega \in \{1, 2\}\bigr), & \omega = 1, 2\\
+                3^2 \cdot \mathbb{P}\bigl(\omega = 3 | \omega \in \{3, 4\}\bigr) + 4^2 \cdot \mathbb{P}\bigl(\omega = 4 | \omega \in \{3, 4\}\bigr), & \omega = 3, 4.
+            \end{cases}
+        \end{equation*}
+        \begin{equation*}
+            \mathbb{E}\bigl( \xi | \mathcal{A} \bigr) = \begin{cases}
+                \frac{5}{2}, & \omega = 1, 2\\
+                \frac{25}{2}, & \omega = 3, 4.
+            \end{cases}
+        \end{equation*}
+        
+    \end{exmp}
+
+    \vspace{5mm}
+    \begin{defn}
+        $\sigma$-алгебра $\mathcal{A}$ называется \textit{порождённой} случайной величиной~$\eta$, если $\mathcal{A} = \bigl\{ \eta^{-1}(B)\colon B \in \mathfrak{B} \bigr\} $.
+        Обозначается $\mathcal{A} = \sigma(\eta)$.
+    \end{defn}
+
+    \begin{defn}
+        Условное математическое ожидание случайной величины~$\xi$ \textit{относительно случайной величины}~$\eta$~--- 
+        это условное математическое ожидание~$\xi$ относительно $\sigma$-алгебры~$\sigma(\eta)$:
+        $$ \mathbb{E} \left( \xi | \eta \right) \equiv \mathbb{E} \bigl( \xi | \sigma(\eta) \bigr).$$
+    \end{defn}
+    Таким образом, величины \ref{cond_exp:discrete} и \ref{cond_exp:abs_continious} удовлетворяют определению и являются выражениями для УМО в дискретном и абсолютно непрерывном случае соответственно.
+
+    \begin{exmp}
+        Возьмём вероятностное пространство из предыдущего примера.
+        Рассмотрим случайную величину 
+        \begin{equation*}
+            \eta(\omega) = \begin{cases} 
+                0, & \omega = 1, 2 \\
+                1, & \omega = 3, 4. 
+            \end{cases}
+        \end{equation*}
+        Легко проверить, что $\sigma(\eta) = \mathcal{A}$ из предыдущего примера. 
+        Таким образом, совпадёт и условное математическое ожидание:
+        \begin{equation*}
+            \mathbb{E}\bigl( \xi | \eta \bigr) = \begin{cases}
+                \frac{5}{2}, & \omega = 1, 2\\
+                \frac{25}{2}, & \omega = 3, 4.
+            \end{cases}
+        \end{equation*}
+    \end{exmp}        
+
+    Обратим внимание на то, что $\sigma$-алгебра $\mathcal{A} = \bigl\{ \varnothing, \{1, 2\}, \{3, 4\}, \Omega \bigr\}$ порождается любой такой случайной величиной, для которой $\eta(1) = \eta(2)$ и $\eta(3) = \eta(4)$.
+    Отталкиваясь от этого, можно взглянуть на условное математическое ожидание немного с другой стороны~--- с той, с которой его пытается рассказать Чернова.
+
+    Рассмотрим пространство случайных величин с конечным вторым моментом~--- $L^2$. 
+    В нём определим скалярное произведение 
+    \begin{equation*}
+        \langle \xi, \eta \rangle \; \equiv \; \mathbb{E} \left[ \xi \eta \right]
+    \end{equation*}
+    и норму
+    \begin{equation*}
+        \Vert \xi \Vert = \sqrt{\mathbb{E} \xi^2 }.
+    \end{equation*}
+
+    Множество всех случайных величин $L^2_{\mathcal{A}}$ с конечным вторым моментом и измеримых относительно $\sigma$-алгебры $\mathcal{A} \subseteq \mathcal{F}$ является подпространством $L^2 \!$.
+    Тогда оператор $\Pi_{L^2_{\mathcal{A}}} \colon L^2 \mapsto L^2$, задаваемый равенством
+    \begin{equation*}
+        \Pi_{L^2_{\mathcal{A}}}(\xi) = \mathbb{E}\left(\xi | \mathcal{A}\right)
+    \end{equation*}
+    является оператором ортогонального проектирования на $L^2_{\mathcal{A}}$.
+    В частности:
+    \begin{itemize}
+        \item 
+            Условное математическое ожидание $\mathbb{E} \left(\xi | \mathcal{A}\right)$~--- это наилучшее (в смысле среднеквадратичного отклонения) приближение $\xi \; \mathcal{A}$-измеримыми величинами:
+            \begin{equation*}
+                \Vert \xi - \mathbb{E}\left(\xi | \mathcal{A} \right) \Vert = \inf\limits_{\eta \in L^2_{\mathcal{A}}} \Vert \xi - \eta \Vert.
+            \end{equation*}
+            Это согласуется с нашим первым примером~--- исходная случайная величина возводила аргумент в квадрат.
+            Её условное математическое ожидание относительно $\mathcal{A}$ "<пытается"> сделать то же самое, 
+            но оно должно удовлетворять ограничением $\eta(1) = \eta(2), \eta(3) = \eta(4)$, которое и задаёт наше подпространство $L^2_{\mathcal{A}}$ случайных величин.
+        \item
+            Условное математическое ожидание сохраняет скалярное произведение (это то, что Чернова называет тождеством ортопроекции):
+            \begin{equation*}
+                \langle \xi, \eta \rangle = \langle \mathbb{E}\left(\xi | \mathcal{A} \right), \eta \rangle \quad \forall \, \eta \in L^2_{\mathcal{A}}.
+            \end{equation*}
+        \item
+            Условное математическое ожидание идемпотентно:
+            \begin{equation*}
+                \Bigl( \Pi_{L^2_{\mathcal{A}}} \Bigr)^2 = \Pi_{L^2_{\mathcal{A}}}.
+            \end{equation*}
+            Или, более громоздко:
+            \begin{equation*}
+                \mathbb{E} \Bigl[ \mathbb{E} \bigl[ \xi | \mathcal{A}\bigr] | \mathcal{A} \Bigr] = \mathbb{E} \bigl[ \xi | \mathcal{A}\bigr].
+            \end{equation*}
+    \end{itemize}
+
+    \vspace{1cm}
+    \begin{namedthm}[Свойства условного математического ожидания]\leavevmode
+        \begin{enumerate}
+            \item 
+                Условное математическое ожидание линейно:
+                \begin{equation*}
+                    \mathbb{E} \bigl(a \xi + b \zeta | \mathcal{A}\bigr) \overset{\text{п.н.}}{=} a \mathbb{E} \bigl(\xi | \mathcal{A}\bigr) + b \mathbb{E} \bigl(\zeta | \mathcal{A}\bigr).
+                \end{equation*}
+            \item
+                Если $\zeta$~--- $\mathcal{A}$-измеримая случайная величина, то 
+                \begin{equation*}
+                    \mathbb{E}\left( \xi \cdot \zeta | \mathcal{A}\right) = \zeta \cdot \mathbb{E}\left(\xi | \mathcal{A}\right).
+                \end{equation*}
+                В частности, если мы рассмотрим условное математическое ожидание относительно случайной величины $\eta$, 
+                и положим $\zeta = f(\eta)$, где $f(x)$~--- борелевская функция, то 
+                \begin{equation*}
+                    \mathbb{E}\left( \xi \cdot \zeta | \eta \right) = \zeta \cdot \mathbb{E}\left(\xi | \eta \right).
+                \end{equation*}
+        \iffalse        
+            \item 
+                Если $f(\eta) \in L$ такова, что $\mathbb{E}|f(\eta) \cdot \xi|<\infty$, то
+                \begin{equation*}
+                    \mathbb{E}(f(\eta) \cdot \xi | \eta)
+                    \stackrel{\text{п.н.}}{=}
+                    f(\eta) \cdot \mathbb{E}(\xi | \eta)
+                \end{equation*}
+                \begin{proof}
+                    Рассмотрим только случай, когда $f(\eta)$ ограничена. 
+                    Проверим, что $\zeta=f(\eta) \cdot \mathbb{E}(\xi | \eta)$ удовлетворяет тождеству ортопроекции: для любой ограниченной $g(\eta) \in L$
+                    \begin{equation*}
+                        \mathbb{E}(f(\eta) \xi \cdot g(\eta))=\mathbb{E}(\zeta \cdot g(\eta))
+                    \end{equation*}
+                    Обозначим $h(\eta)=f(\eta) g(\eta) \in L$. 
+                    Эта функция ограничена, поэтому
+                    \begin{equation*}
+                        \mathbb{E}(\xi f(\eta) \cdot g(\eta))=\mathbb{E}(\xi h(\eta))=\mathbb{E}(\widehat{\xi} h(\eta))=\mathbb{E}(\zeta \cdot g(\eta))
+                    \end{equation*}
+                \end{proof}
+        \fi
+            \item 
+                Если $\mathbb{E}\bigl| g(\xi, \eta) \bigr| <\infty$, то
+                \begin{equation*}
+                    \mathbb{E} g(\xi, \eta)=\mathbb{E}\left[\Bigl.\mathbb{E}\bigl(g(\xi, y) | \eta\bigr)\Bigr|_{y=\eta}\right]
+                \end{equation*}
+            \item 
+                Если $\xi$ и $\eta$ независимы, то $\mathbb{E}(\xi | \eta)=\mathbb{E} \xi$.
+            \item
+                Взятие математического ожидания "<убирает"> условие:
+                \begin{equation*}
+                    \mathbb{E}\bigl[ \mathbb{E} \left(\xi | \mathcal{A} \right)\bigr] = \mathbb{E} \xi
+                \end{equation*}                
+        \end{enumerate}
+    \end{namedthm}
+    С помощью условного математического ожидания можно ввести условную вероятность относительно $\sigma$-алгебры:
+    \begin{equation*}
+        \mathbb{P}(B | \mathcal{A}) \overset{\text{def}}{=} \mathbb{E}\bigl(\rm{I}(B) | \mathcal{A} \bigr).
+    \end{equation*}
+
+\iffalse
+    \subsubsection{Вычисление условного матожидания}
+    Возьмём функцию $h(y)=\mathbb{E}(\xi \,|\, \eta=y)$, для которой $\mathbb{E}(\xi | \eta)=h(\eta)$ и рассмотрим, что такое условное математическое ожидание относительно события $\{\eta=y\}$ для двух случаев: когда обе случайные величины имеют дискретное распределение и когда их совместное распределение абсолютно непрерывно.
+    \begin{enumerate}
+        \item Пусть $\xi$ принимает значения $a_{1}, a_{2}, \ldots$, а $\eta$~--- значения $b_{1}, b_{2}, \ldots$ Тогда $h(\eta)$ может принимать только значения $h\left(b_{1}\right), h\left(b_{2}\right), \ldots$, где
+        \begin{equation*}
+            h(y)=\sum\limits_{i} a_{i} \mathbb{P}\left(\xi=a_{i} | \eta=y\right)
+        \end{equation*}
+        Иначе говоря, при каждом фиксированном $y$ значение $h(y)$ определяется как математическое ожидание дискретного распределения со значениями $a_{i}$ и вероятностями $\mathbb{P}\left(\xi=a_{i} | \eta=y\right)$. Такое распределение называется \textit{условным распределением случайной величины $\xi$ при условии $\eta = y$}.
+        
+        \item Во втором случае пусть $f_{\xi, \eta}(x, y)$~--- плотность совместного распределения, $f_{\eta}(y)$~--- плотность распределения величины $\eta$.Тогда положим
+        \begin{equation*}
+            h(y)=\int\limits_{\mathbb{R}} x \frac{f_{\xi, \eta}(x, y)}{f_{\eta}(y)} d x
+        \end{equation*}
+        При фиксированном $y$ число $h(y)$ есть математическое ожидание абсолютно непрерывного распределения с плотностью распределения
+        \begin{equation*}
+            f(x | y)=\frac{f_{\xi, \eta}(x, y)}{f_{\eta}(y)}=\frac{f_{\xi, \eta}(x, y)}{\int\limits_{\mathbb{R}} f_{\xi, \eta}(x, y) d x}
+        \end{equation*}
+        Такое распределение называется \textit{условным распределением величины $\xi$ при условии $\eta = y$}, а функция $f(x | y)$~--- \textit{условной плотностью}.
+    \end{enumerate}
+    
+
+        Убедимся формально (скажем, в абсолютно непрерывном случае), что определённая выше $h(\eta)$ удовлетворяет тождеству ортопроекции и, следовательно, является условным матожиданием $\mathbb{E}(\xi | \eta)$. Для любой $g(\eta) \in L$ (такой, что соответствующее математическое ожидание существует) левая часть тождества ортопроекции равна
+        \begin{equation*}
+            \mathbb{E}(\xi \cdot g(\eta))=\iint_{\mathbb{R}^{2}} x g(y) f_{\xi, \eta}(x, y) d x d y
+        \end{equation*}
+        
+        Правая часть равна
+        \begin{equation*}
+            \mathbb{E}(h(\eta) g(\eta))=\int\limits_{\mathbb{R}} h(y) g(y) f_{\eta}(y) d y=\iint_{\mathbb{R} \mathbb{R}} x \frac{f_{\xi, \eta}(x, y)}{f_{\eta}(y)} d x \cdot g(y) f_{\eta}(y) d y
+        \end{equation*}
+        
+        Сокращая $f_{\eta}(y)$, получаем равенство левой и правой частей.
+\fi

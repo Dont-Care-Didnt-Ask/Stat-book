@@ -1,0 +1,85 @@
+\subsubsection{Замена моментов на выборочные аналоги в построении доверительных интервалов}
+
+Для применения ЦПТ требуется знать дисперсию исследуемой величины, а она зачастую зависит от оцениваемого параметра.
+В предыдущем примере нам удалось разрешить неравенство относительно $\theta$, однако это получается сделать не всегда.
+Возникает вопрос~--- можно ли в таком случае заменить неизвестные моменты на их выборочные аналоги? 
+Например, $\Var X_1$ на $S^2(\mathbf{X})$?
+
+Сформулируем теорему:
+\begin{thm*}
+    Пусть оценка $T_n = T_n(\mathbf{X})$ параметра $\theta$ такова, 
+    что ${\sqrt{n} (T_n - \theta) \xrightarrow[n \to \infty]{\text{d}} \mathrm{N}(0, \sigma^2(\theta))} \; \Always$
+    (иными словами, $T_n$ асимптотически нормальна).
+    Пусть, далее, функция $\varphi$ дифференцируема и $\varphi^\prime \neq 0$.
+    Тогда 
+    \begin{equation*}
+        \sqrt{n} \bigl( \varphi(T_n) - \varphi(\theta) \bigr) 
+        \xrightarrow[n \to \infty]{\text{d}} 
+        \mathrm{N}(0, [\varphi^\prime(0)^2]\sigma^2(\theta)).
+    \end{equation*}
+    Кроме того, если $\varphi^\prime$ непрерывна, то 
+    \begin{equation*}
+        \sqrt{n} \bigl( \frac{\varphi(T_n) - \varphi(\theta)}{\varphi^\prime(T_n)} \bigr) 
+        \xrightarrow[n \to \infty]{\text{d}} 
+        \mathrm{N}(0, \sigma^2(\theta)).
+    \end{equation*}
+    а если и $\sigma^2(\theta)$ непрерывна, то 
+    \begin{equation*}
+        \sqrt{n} \bigl( \frac{\varphi(T_n) - \varphi(\theta)}{ \varphi^\prime(T_n) \sigma(T_n) } \bigr) 
+        \xrightarrow[n \to \infty]{\text{d}} 
+        \mathrm{N}(0, 1).
+    \end{equation*}
+\end{thm*}
+
+\begin{proof}
+    Доказательство основано на разложении Тейлора
+    \begin{equation*}
+        \varphi(T_n) - \varphi(\theta) = (T_n - \theta) (\varphi^\prime(\theta) + \zeta_n), 
+    \end{equation*}
+    где $\forall \, \varepsilon > 0 \: \exists \, \delta = \delta(\varepsilon)\colon |T_n - \theta| < \delta \Rightarrow |\zeta_n| < \varepsilon \; \Always$.
+    Отсюда $\Probab \bigl(|\zeta_n| < \varepsilon \bigr) \geqslant \Probab(|T_n - \theta| < \delta(\varepsilon))$, 
+    но в силу состоятельности $T_n$ правая часть стремится к единице с ростом $n$.
+    Следовательно, $\zeta_n \xrightarrow[n \to \infty]{\Probab} 0$.
+    Значит, 
+    \begin{equation*}
+        \sqrt{n}(\varphi(T_n) - \varphi(\theta)) - \sqrt{n}(T_n - \theta) \varphi^\prime(\theta) = \sqrt{n}(T_n - \theta) \zeta_n
+    \end{equation*}
+    Это означает, что случайная величина $\sqrt{n}(\varphi(T_n) - \varphi(\theta))$ имеет такое же предельное распределение, 
+    как и величина $\sqrt{n}(T_n - \theta) \varphi^\prime(\theta)$, т.е. нормальное с параметрами $(0, [\varphi^\prime(\theta)]^2 \sigma^2(\theta))$.
+    Далее, если производная непрерывна, то $\varphi^\prime(T_n) \xrightarrow[n \to \infty]{} \varphi^\prime(\theta)$.
+    Из этого и из свойств сходимости случайных величин\footnote{Более подробное описание и доказательство свойств будут (почти наверное будут) добавлены в следующем издании} следует второе утверждение.
+    Аналогичные рассуждения проводятся и для дисперсии.
+\end{proof}
+
+Итак, чтобы воспользоваться результатами этой теоремы, нужно найти асимптотически нормальные оценки.
+Это свойство встречается достаточно часто~--- им обладают многие оценки, постороенные методом моментов, а также большинство оценок максимального правдоподобия.
+Рассмотрим примеры.
+
+\begin{exmp}
+    Дана выборка $\mathbf{X} = \Sample, \: X_i \sim \mathrm{N}(a, \sigma^2)$, $a, \sigma$~--- параметры.
+    Объём выборки $n$ считается достаточно большим. 
+    Требуется построить центральный асимптотический доверительный интервал для $a$ с надежностью $\gamma$.
+
+    Выборочное среднее является асимптотически нормальной оценкой для параметра $a$, т.е.
+    \begin{equation*}
+        \frac{\overline{X} - a}{\sqrt{\Var \overline{X}}} = 
+        \sqrt{n} \, \frac{\overline{X} - a}{\sqrt{\Var X_1}} = 
+        \sqrt{n} \, \frac{\overline{X} - a}{\theta} 
+        \xrightarrow[n \to \infty]{\text{d}}
+        \mathrm{N}(0, 1)
+    \end{equation*}
+
+    Но дисперсия неизвестна.
+    Воспользуемся теоремой: оценка асимптотически нормальна, функция $\varphi(x) \equiv x$, очевидно, непрерывно дифференцируема.
+    Значит, 
+    \begin{equation*}
+        \sqrt{n} \, \frac{\overline{X} - a}{\sqrt{S^2}} 
+        \xrightarrow[n \to \infty]{}
+        \mathrm{N}(0, 1)
+    \end{equation*}
+    гдe $S^2$~--- выборочная дисперсия.
+
+    Значит, центральный доверительный интервал для параметра $a$~--- 
+    $\left(\overline{X} - \frac{z \sqrt{S^2}}{\sqrt{n}}, \, \overline{X} - \frac{z \sqrt{S^2}}{\sqrt{n}}\right)$,
+    где $z = z_{(1 + \gamma)/2}$~--- квантиль порядка $\frac{1 + \gamma}{2}$ стандартного нормального распределения.
+\end{exmp}

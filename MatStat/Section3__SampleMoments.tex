@@ -1,0 +1,173 @@
+\section{Выборочные моменты. Их свойства}
+
+В параграфе 2.1 мы предположили, что все случайные величины выборки $\mathbf{X} = \Sample$ имеют одно и то же распределение, т.е. $X_i \sim \xi~~\forall~i = \overline{1, n}$ для некоторой случайной величины $\xi$. 
+Попробуем найти приближения некоторых числовых характеристик этой случайной величины.
+\begin{defn}
+    \textit{Выборочное математическое ожидание:} 
+    \begin{equation*}
+        \tilde{\mathbb{E}} \xi =
+        \sum\limits_{i=1}^{n} \frac{1}{n} X_{i} =
+        \frac{1}{n} \sum\limits_{i=1}^{n} X_{i} =
+        \overline{X}
+    \end{equation*}
+
+    Выборочное матожидание функции $g(\xi)$:
+    \begin{equation*}
+        \tilde{\mathbb{E}} g\left(\xi \right) = 
+        \frac{1}{n} \sum\limits_{i=1}^{n} g\left(X_{i}\right) =
+        \overline{g(X)}
+    \end{equation*}
+\end{defn}
+
+\begin{defn}
+    \textit{Выборочная дисперсия:}
+    \begin{equation*}
+        \tilde{\mathbb{D}} \xi = 
+        \sum\limits_{i=1}^{n} \frac{1}{n} \bigl(X_{i}-\tilde{\mathbb{E}} \xi \bigr)^{2} = 
+        \frac{1}{n} \sum\limits_{i=1}^{n} \bigl(X_{i}-\overline{X} \bigr)^{2} =
+        S^{2}
+    \end{equation*}
+\end{defn}
+
+\begin{defn}
+    \textit{Несмещённая выборочная дисперсия:} 
+    \begin{equation*}
+        S_{0}^{2} = 
+        \frac{1}{n-1} \sum\limits_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2} =
+        \frac{n}{n-1} S^2
+    \end{equation*}
+\end{defn}
+
+\begin{defn}
+    \textit{Выборочный момент $k$-го порядка:}
+    \begin{equation*}
+        \tilde{\mathbb{E}} \left[ \xi^{k} \right] = 
+        \sum\limits_{i=1}^{n} \frac{1}{n} X_{i}^{k} =
+        \frac{1}{n} \sum\limits_{i=1}^{n} X_{i}^{k} =
+        \overline{X^{k}}
+    \end{equation*}
+\end{defn}
+
+Все вышеперечисленные характеристики являются случайными величинами как функции от выборки $\Sample$ и оценками для истинных моментов искомого распределения.
+
+Введём ещё одно определение.
+\begin{defn}
+    Статистика $T(\mathbf{X})$ называется \textit{асимптотически нормальной}, если существуют такие 
+    $a_n(\theta), \sigma_n(\theta)$, что $\cfrac{T_n(\mathbf{X}) - a_n(\theta)}{\sigma_n(\theta)} \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, 1)$.
+    Иными словами, оценка называется асимптотически нормальной, если с ростом объёма выборки её функция распределения (оценка, будучи функцией от выборки, сама является случайной величиной) стремится к функции нормального распределения.
+\end{defn}
+Забегая вперёд, скажеем, что это свойство бывает полезным при построении доверительных интервалов.
+
+\begin{thm*}
+    Выборочное среднее $\overline{X}$ является несмещённой, состоятельной и асимптотически нормальной оценкой для теоретического среднего (математического ожидания), то есть:
+
+    \begin{enumerate}[label={\arabic*.}]
+        \item Если $\MExp |X_{1}|<\infty$, то $\MExp \overline{X} = \MExp X_{1}=a$;
+        \item Если $\MExp |X_{1}|<\infty$, то $\overline{X} \xrightarrow[n \to \infty]{\text{p}} \MExp X_{1}=a$;
+        \item Если $\Var  X_{1}<\infty,~ \Var X_{1} \neq 0$, 
+        
+        то $\cfrac{\overline{X} - \MExp \overline{X} }{\sqrt{\Var \overline{X}}} = \sqrt{n} \,\cfrac{\overline{X} - \MExp X_1}{\sqrt{\Var X_1}} \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, 1)$.
+    \end{enumerate}
+\end{thm*}
+
+\begin{proof}
+\begin{enumerate}[label={\arabic*.}]
+    \item Из линейности математического ожидания:
+    $$\MExp \overline{X}=\frac{1}{n}\bigl(\MExp  X_{1}+\ldots + \MExp X_{n}\bigr)=\frac{1}{n} \cdot n \, \MExp X_{1}= \MExp  X_{1} = a.$$
+    \item Из ЗБЧ в форме Хинчина:
+    \begin{equation*}
+        \overline{X} = 
+        \cfrac{X_{1}+\ldots+X_{n}}{n} \xrightarrow[n \to \infty]{\text{p}} \MExp X_{1} = a.
+    \end{equation*}
+
+    \item Раскроем дисперсию суммы, пользуясь тем, что $X_1, \ldots X_n$ независимы и одинаково распределены, а затем домножим числитель и знаменатель на $n$. 
+    Тогда можно будет применить ЦПТ:
+    \begin{gather*}
+        \frac{\bigl(\overline{X} - \MExp \overline{X} \bigr)}{\sqrt{\Var \overline{X}}} =
+        \frac{\bigl(\overline{X} - \MExp X_{1}\bigr)}{\sqrt{\Var \left[ \frac{1}{n} \sum\limits_{i=1}^n X_i \right]}} = 
+        \frac{\bigl(\overline{X} - \MExp X_{1}\bigr)}{\sqrt{\frac{1}{n^2} \Var \left[ \sum\limits_{i=1}^n X_i \right]}} = \\
+        \frac{\bigl(\overline{X} - \MExp X_{1}\bigr)}{\sqrt{\frac{1}{n^2} \, n \, \Var X_1}} = 
+        \frac{\frac{1}{n}\sum\limits_{i=1}^{n} X_{i} - \MExp X_{1}}{\sqrt{ \frac{1}{n} \, \Var X_1}} = 
+        \sqrt{n} \, \frac{\frac{1}{n}\sum\limits_{i=1}^{n} X_{i} - \MExp X_{1}}{\sqrt{\Var X_1}} = \\
+        \sqrt{n} \, \frac{\sum\limits_{i=1}^{n} X_{i} - n \MExp X_{1}}{n \sqrt{\Var X_1}} =
+        \frac{\sum\limits_{i=1}^{n} X_{i} - n \MExp X_{1}}{\sqrt{n \, \Var X_1}} 
+        \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, 1) 
+    \end{gather*}
+\end{enumerate}
+\end{proof}
+
+\begin{rmrk}
+    Аналогичными свойствами обладает выборочный $k$-й момент, являющийся несмещённой, состоятельной и асимптотически нормальной оценкой для теоретического $k$-го момента.
+\end{rmrk}
+
+\begin{rmrk}
+    Применив \hyperlink{SLLN}{УЗБЧ Колмогорова}, можно показать, что выборочные $k$-е моменты сходятся к теоретическим почти наверное. 
+    Такие оценки называются \textit{сильно состоятельными}. На практике обычно достаточно и состоятельности в обычном смысле (т.е. сходимости к теоретическому моменту по вероятности с ростом объёма выборки).
+\end{rmrk}
+
+\begin{thm*}
+    Пусть $\Var X_{1}<\infty$.
+    \begin{enumerate}
+        \item Выборочные дисперсии $S^{2}$ и $S^{2}_0$ являются состоятельными оценками для истинной дисперсии:
+            \begin{equation*}
+                S^{2} \xrightarrow[n \to \infty]{\text{p}} \Var X_{1}=\sigma^{2}, \quad S_{0}^{2} \xrightarrow[n \to \infty]{\text{p}} \Var X_{1}=\sigma^{2} \quad \Always.
+            \end{equation*}
+        \item Величина $S^{2}$~--- смещённая оценка дисперсии, а $S^{2}_0$~--— несмещённая:
+            \begin{equation*}
+                \MExp S^{2}=\frac{n-1}{n} \, \Var X_{1}=\frac{n-1}{n} \sigma^{2} \neq \sigma^{2}, \quad \MExp  S_{0}^{2}=\Var  X_{1}=\sigma^{2} \quad \Always.
+            \end{equation*}
+        \item Если $0 \neq \Var \Bigl[ \bigl(X_{1}-\MExp X_{1}\bigr)^{2} \Bigr] <\infty$, то $S^{2}$ и $S^{2}_0$ являются асимптотически нормальными оценками истинной дисперсии:
+            \begin{equation*}
+                \sqrt{n}\left(S^{2}-\Var  X_{1}\right) \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}\Bigl(0, \Var \Bigl[\bigl(X_{1}-\MExp  X_{1}\bigr)^{2} \Bigr] \Bigr) \quad \Always.
+            \end{equation*}
+    \end{enumerate}
+\end{thm*}
+
+\begin{proof}
+\begin{enumerate}
+    \item 
+    $S^{2} = 
+    \cfrac{1}{n} \sum\limits_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2} = 
+    \cfrac{1}{n} \sum\limits_{i=1}^{n}\Bigl(X_i^2 - 2 X_i \overline{X} + \bigl(\overline{X}\bigr)^2 \Bigr) = \\
+    \cfrac{1}{n} \Bigl( n \overline{X^2} - 2 \overline{X} \sum\limits_{i=1}^{n}X_i + n \bigl(\overline{X}\bigr)^2\Bigr) = 
+    \overline{X^{2}}-2\bigl(\overline{X}\bigr)^{2} + \bigl(\overline{X}\bigr)^2 = 
+    \overline{X^{2}}-\bigl(\overline{X}\bigr)^{2}$.
+
+    Используя состоятельность первого и второго выборочных моментов и свойства сходимости по вероятности, получаем:
+    \begin{gather*}
+        S^{2}=\overline{X^{2}}-(\overline{X})^{2} \xrightarrow[n \to \infty]{\text{p}} \MExp  X_{1}^{2} - \bigl(\MExp  X_{1}\bigr)^{2}=\sigma^{2} \\
+        \cfrac{n}{n-1} \underset{n \to \infty}{\longrightarrow} 1 \quad \Rightarrow \quad S_{0}^{2}=\frac{n}{n-1} S^{2} \xrightarrow[n \to \infty]{\text{p}} \sigma^{2}
+    \end{gather*}
+    
+    \item Используя несмещённость первого и второго выборочных моментов:
+    \begin{multline*}
+        \MExp  S^{2} = \MExp \left(\overline{X^{2}}-(\overline{X})^{2}\right)
+        = \MExp \overline{X^{2}}-\MExp \bigl(\overline{X}\bigr)^{2}
+        = \MExp X_{1}^{2}-\MExp \bigl(\overline{X}\bigr)^{2} = \\
+        = \MExp X_{1}^{2}-\Bigl(\bigl(\MExp \overline{X}\bigr)^{2} + \Var \overline{X}\Bigr)
+        = \MExp X_{1}^{2}-\bigl(\MExp X_{1}\bigr)^{2} - \Var \left(\frac{1}{n} \sum\limits_{i=1}^{n} X_{i}\right) = \\
+        = \Var X_1 - \Var \left(\frac{1}{n} \sum\limits_{i=1}^{n} X_{i}\right)
+        = \sigma^{2}-\frac{1}{n^{2}} n \, \Var  X_{1}
+        = \sigma^{2}-\frac{\sigma^{2}}{n}
+        = \frac{n-1}{n} \sigma^{2}.
+    \end{multline*}
+    
+    Откуда следует:
+    \begin{equation*}
+        \MExp S_{0}^{2}=\frac{n}{n-1} \, \MExp S^{2}=\sigma^{2}.
+    \end{equation*}
+    
+    \item Введём случайные величины $Y_{i}=X_{i}-a$; $\MExp Y_{i} = 0, \; \Var Y_{1} = \Var X_{1}=\sigma^{2}$.
+    \begin{gather*}
+        S^{2}=\frac{1}{n} \sum\limits_{i=1}^{n}(X_{i}-\overline{X})^{2}=\frac{1}{n} \sum\limits_{i=1}^{n}(X_{i}-a-(\overline{X}-a))^{2}=\overline{Y^{2}}-\bigl(\overline{Y}\bigr)^{2}. \\
+        \begin{aligned}
+            \sqrt{n}\bigl(S^{2}-\sigma^{2}\bigr) = \sqrt{n}\Bigl(\overline{Y^{2}}-\bigl(\overline{Y}\bigr)^{2}-\sigma^{2}\Bigr)
+            = \sqrt{n}\Bigl(\overline{Y^{2}}-\MExp  Y_{1}^{2} \Bigr) - \sqrt{n}\bigl(\overline{Y}\bigr)^{2} = \\
+            =\frac{\sum\limits_{i=1}^{n} Y_{i}^{2}-n \MExp  Y_{1}^{2}}{\sqrt{n}}-\overline{Y} \cdot \sqrt{n} \, \overline{Y} \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, \Var (X_{1}-\MExp X_1)^{2}),
+    \end{aligned}
+    \end{gather*}
+    поскольку $\cfrac{\sum\limits_{i=1}^{n} Y_{i}^{2}-n \MExp  Y_{1}^{2}}{\sqrt{n}} \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, \Var  Y_{1}^{2})$ по ЦПТ, 
+    а ${\overline{Y} \cdot \sqrt{n} \, \overline{Y} \xrightarrow[n \to \infty]{\text{d}} 0}$ как произведение последовательностей ${\overline{Y} \xrightarrow[n \rightarrow \infty]{p} 0}$ и ${\sqrt{n} \, \overline{Y} \xrightarrow[n \to \infty]{\text{d}} \mathbf{N}(0, \Var  X_{1})}$.
+\end{enumerate}
+\end{proof}
+
