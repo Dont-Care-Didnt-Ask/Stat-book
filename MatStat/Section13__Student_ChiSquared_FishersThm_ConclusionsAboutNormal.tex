@@ -1,10 +1,10 @@
 \section{Статистические выводы о параметрах нормального распределения. Распределения \texorpdfstring{$\chi^{2}$}{хи-квадрат} и Стьюдента. Теорема Фишера}
 
 \begin{defn}
-    Говорят, что случайная величина $\xi$ имеет \textit{гамма-распределение} с параметрами $\lambda > 0,~ \alpha > 0$ $(\mathbf{\Gamma}(\lambda, \alpha))$, 
+    Говорят, что случайная величина $\xi$ имеет \textit{гамма-распределение} с параметрами $\lambda > 0,~ \alpha > 0$ (или $\xi \sim \mathbf{\Gamma}(\lambda, \alpha)$), 
     если $\xi$ имеет следующую плотность распределения:
     \begin{equation*}
-        f_{\xi}(x) = \begin{cases}
+        p_{\xi}(x) = \begin{cases}
             0, & \text { если } x \leqslant 0 \\
             c \cdot x^{\alpha-1} e^{-\lambda x}, & \text { если } x>0
         \end{cases}
@@ -12,7 +12,7 @@
     где постоянная $c$ вычисляется из свойства нормировки плотности:
     \begin{equation*}
         1 = 
-        \int\limits_{-\infty}^{\infty} f_{\xi}(x) d x = 
+        \int\limits_{-\infty}^{\infty} p_{\xi}(x) d x = 
         c \int\limits_{0}^{\infty} x^{\alpha-1} e^{-\lambda x} d x = 
         \frac{c}{\lambda^{\alpha}} \int\limits_{0}^{\infty}(\lambda x)^{\alpha-1} e^{-\lambda x} d(\lambda x) = 
         \frac{c}{\lambda^{\alpha}} \Gamma(\alpha),
@@ -22,11 +22,52 @@
 
 \begin{lem}
     Пусть $\xi_{1}, \ldots, \xi_{n}$ независимы, и $\xi_i \sim \mathbf{\Gamma}(\lambda, \alpha_i), i=\overline{1,n}$. 
-    Тогда их сумма $S_{n}=\xi_{1}+\ldots+\xi_{n} \sim \mathbf{\Gamma}(\lambda, \alpha_1 + \ldots + \alpha_n)$
+    Тогда их сумма $S_{n}=\xi_{1}+\ldots+\xi_{n} \sim \mathbf{\Gamma}(\lambda, \alpha_1 + \ldots + \alpha_n)$.
 \end{lem}
+\begin{proof}
+    Найдём для начала характеристическую функцию гамма-распределения:
+    \begin{multline*}
+        \int\limits_{-\infty}^{\infty} p_{\xi}(x) e^{itx} \, dx = 
+        \int\limits_{-\infty}^{\infty} \frac{\lambda^\alpha \, x^{\alpha - 1}}{\Gamma(\alpha)} \, e^{-\lambda x}\, e^{itx} \,dx = 
+        \left| \begin{array}{c}
+            y  = -(\lambda - it)x \\
+            dy = -(\lambda - it)dx
+        \end{array} \right| = \\
+        \int\limits_{-\infty}^{\infty} \frac{\lambda^\alpha \, y^{\alpha - 1}}{(\lambda - it)^{\alpha - 1} \, \Gamma(\alpha)} \, e^{-y} \frac{1}{\lambda - it} \,dy = 
+        \frac{\lambda^\alpha}{(\lambda - it)^{\alpha}} \int\limits_{-\infty}^{\infty} \frac{y^{\alpha - 1}}{\Gamma(\alpha)} \, e^{-y} \, dy = 
+        \left(\frac{1}{1 - \frac{it}{\lambda}} \right)^\alpha \!.
+    \end{multline*}
+    Теперь вспомним, что если $\xi, \eta$ независимы, то характеристическая функция $f_{\xi + \eta}(t) = f_{\xi}(t) f_{\eta}(t)$.
+    Тогда, если у нас есть независимые случайные величины $\xi_1, \ldots, \xi_n, \: \xi_i \sim \Gamma(\lambda, \alpha_i)$, 
+    то характеристическая функция суммы~---
+    \begin{equation*}
+        \left(\frac{1}{1 - \frac{it}{\lambda}} \right)^\alpha_1 \cdot \ldots \cdot \left(\frac{1}{1 - \frac{it}{\lambda}} \right)^\alpha_n = 
+        \left(\frac{1}{1 - \frac{it}{\lambda}} \right)^{\alpha_1 + \ldots + \alpha_n}
+    \end{equation*}
+
+    По теореме Леви о непрерывности заключаем, что сумма имеет распределение $\Gamma(\lambda, \alpha_1 + \ldots + \alpha_n)$.
+\end{proof}
+
 \begin{lem}
     Если $\xi \sim \mathbf{N}(0,1)$, то $\xi^2 \sim \mathbf{\Gamma}(1/2, 1/2)$.
 \end{lem}
+
+\begin{proof}
+    Найдём функцию распределения случайной величины~${\eta = \xi^2}$:
+    \begin{gather*}
+        \mathbb{P}(\xi^2 < x) = \mathbb{P}(|\xi| < \sqrt{x}) = 2 \, \mathbb{P}(0 < x < \sqrt{x}) = \\
+        2 \int\limits_{0}^{\sqrt{x}} \frac{1}{\sqrt{2 \pi}}\,  e^{u^2 /2} \,du = 
+        \left| \begin{array}{cc}
+            z = u^2    & u = \sqrt{z} \\
+            dz = 2u du & du = \frac{dz}{2 \sqrt{z}} \\
+            u = 0 \Rightarrow z = 0 & u = \sqrt{x} \Rightarrow z = x
+        \end{array} \right| = \\
+        2 \int\limits_{0}^{x} \frac{1}{\sqrt{2 \pi}} \, e^{-\frac{1}{2}z} \frac{dz}{2 \sqrt{z}} = 
+        \int\limits_{0}^{x} \frac{\left(\frac{1}{2}\right)^{\frac{1}{2}} z^{\frac{1}{2} - 1}}{\sqrt{\pi}} e^{-\frac{1}{2}z} dz.
+    \end{gather*}
+    Но это в точности функция гамма-распределения с параметрами $\lambda = \frac{1}{2}, \alpha = \frac{1}{2}$ (ведь $\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}$).
+\end{proof}
+
 \begin{crlr}
     Если $\xi_{1}, \ldots, \xi_{k}$ независимы и $\xi_i \sim \mathbf{N}(0,1)$, то случайная величина $\chi^{2}=\xi_{1}^{2}+\ldots+\xi_{k}^{2} \sim \mathbf{\Gamma}(1/2, k/2)$
 \end{crlr}
@@ -42,8 +83,9 @@
     \end{cases}
 \end{equation*}
 \begin{rmrk}
-    $\chi^2(2) = \mathbf{\Gamma}(1/2,1) = \mathbf{Exp}(1/2)$
+    $\chi^2(2) = \mathbf{\Gamma}(1/2,1) = \mathbf{Exp}(1/2)$.
 \end{rmrk}
+
 \begin{namedthm}[Свойства распределения $\chi^{2}$]\leavevmode
 \begin{enumerate}
     \item Если случайные величины $\xi_1 \sim \chi^{2}(k)$ и $\xi_2 \sim \chi^{2}(m)$ независимы, то их сумма $\xi_1+\xi_1 \sim \chi^{2}(k+m)$;
@@ -71,13 +113,13 @@
 \end{defn}
 Плотность распределения $\mathbf{T}(k)$ имеет вид
 \begin{equation*}
-    f_{k}(y)=\frac{\Gamma((k+1) / 2)}{\sqrt{\pi k} \Gamma(k / 2)}\left(1+\frac{y^{2}}{k}\right)^{-(k+1) / 2}
+    f_{k}(y)=\frac{\Gamma\bigl((k+1) / 2\bigr)}{\sqrt{\pi k} \, \Gamma(k / 2)}\left(1+\frac{y^{2}}{k}\right)^{-(k+1) / 2}
 \end{equation*}
 
 \begin{namedthm}[Свойства распределения Стьюдента]\leavevmode
 \begin{enumerate}
     \item Распределение Стьюдента симметрично, т.е. если $t_k \sim \mathbf{T}(k)$, то $-t_k \sim \mathbf{T}(k)$.
-    \item $\mathbf{T}(k) \Rightarrow \mathbf{N}(0,1)$ при $k \to \infty$.
+    \item $\mathbf{T}(k) \xrightarrow[k \to \infty]{} \mathbf{N}(0,1)$.
     \item У распределения Стьюдента $\mathbf{T}(k)$ существуют только моменты порядка $m < k$, при этом все существующие моменты нечётного порядка равны нулю.
 \end{enumerate}
 \end{namedthm}

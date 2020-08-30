@@ -77,7 +77,7 @@
                 f_{\xi}(x)=\frac{1}{2 \pi} \int\limits_{-\infty}^{\infty} e^{-i t x} \varphi_{\xi}(t) \, d t, \quad x \in \mathbb{R}.
             \end{equation*}
         \item 
-            $\xi_n \Rightarrow \xi \quad \Leftrightarrow \quad \varphi_{\xi_{n}}(t) \to \varphi_{\xi}(t)$ (теорема Леви о непрерывном соответствии).
+            $\xi_n \xrightarrow[n \to \infty]{\text{d}} \xi \quad \Leftrightarrow \quad \varphi_{\xi_{n}}(t) \xrightarrow[n \to \infty]{} \varphi_{\xi}(t)$ (теорема Леви о непрерывном соответствии).
     \end{enumerate}
 \end{namedthm}
 
@@ -133,8 +133,8 @@
             Пусть у характеристической функции существует непрерывная производная чётного порядка $k$. 
             Характеристическая функция и её производные непрерывны, функция $e^{itx}$ бесконечно (а значит, и нужные нам $k$ раз) дифференцируема по $t$, 
             и можно показать, что при этих условиях можно поменять знаки интегрирования и дифференцирования местами.
-            \footnote{Достаточно обозначить интеграл $\int\limits_{\mathbb{R}}{x^{m} e^{itx}dF(x)}, \, m = \overline{0, k-1}$ за $G(t)$ 
-            и расписать его производную по $t$ по определению, воспользовавшись тем, что $\int\limits_{\mathbb{R}} o(\Delta t) dF(x) = o(\Delta t)$.}
+            %\footnote{Достаточно обозначить интеграл $\int\limits_{\mathbb{R}}{x^{m} e^{itx}dF(x)}, \, m = \overline{0, k-1}$ за $G(t)$ 
+            %и расписать его производную по $t$ по определению, воспользовавшись тем, что $\int\limits_{\mathbb{R}} o(\Delta t) dF(x) = o(\Delta t)$.}
             Тогда мы получим, что 
             $$ \varphi^{(k)}(0) = i^k \left.\mathbb{E}\xi^k e^{itx}\right|_{t=0} = i^k \mathbb{E}\xi^k = 
             \int\limits_{\mathbb{R}} x^k dF(x) $$
